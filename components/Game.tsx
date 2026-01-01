@@ -169,7 +169,7 @@ export default function Game() {
                                     className="w-full h-full aspect-square"
                                     initial={false}
                                     animate={{ rotateY: card.isFlipped ? 180 : 0 }}
-                                    transition={{ duration: 0.4, animationDirection: "normal" }}
+                                    transition={{ duration: 0.4 }}
                                     style={{ transformStyle: "preserve-3d" }}
                                 >
                                     {/* Front of card (Hidden state - Show Logo or Pattern) */}
