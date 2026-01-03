@@ -45,7 +45,7 @@ const projects = [
         image: "/assets/project-exploreease.jpg",
         description: "A travel platform designed to simplify trip planning and exploration.",
         tech: ["JavaScript", "Web API", "Frontend"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/ExploreEase.git" },
+        links: { demo: "https://letsexploreease.com/", github: "https://github.com/Abdalrhman1989/ExploreEase.git" },
         badge: null
     },
     {
@@ -67,6 +67,16 @@ const projects = [
         tech: ["React", "Node.js", "Full Stack"],
         links: { demo: "#", github: "https://github.com/Abdalrhman1989/servixerspace.git" },
         badge: null
+    },
+    {
+        id: 7,
+        title: "Triply",
+        category: "SaaS",
+        image: "/assets/project-triply.jpg",
+        description: "A comprehensive management platform with admin dashboard, analytics, and user management.",
+        tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+        links: { demo: "https://triply-one-nu.vercel.app/", github: "#" },
+        badge: "New"
     }
 ];
 
@@ -100,8 +110,8 @@ export default function Projects() {
                                 key={f}
                                 onClick={() => setFilter(f)}
                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === f
-                                        ? "bg-primary text-primary-foreground"
-                                        : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
                                     }`}
                             >
                                 {f}
