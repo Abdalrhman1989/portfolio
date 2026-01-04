@@ -191,11 +191,20 @@ export default function Projects() {
                                         )}
                                     </div>
 
-                                    {/* Fallback visual if no image */}
-                                    <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground bg-secondary/50">
-                                        <Layers className="w-12 h-12 opacity-20 mb-2" />
-                                        <span className="text-xs uppercase tracking-widest opacity-50 font-bold">{project.category}</span>
-                                    </div>
+
+                                    {project.image ? (
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground bg-secondary/50">
+                                            <Layers className="w-12 h-12 opacity-20 mb-2" />
+                                            <span className="text-xs uppercase tracking-widest opacity-50 font-bold">{project.category}</span>
+                                        </div>
+                                    )}
 
                                     {project.badge && (
                                         <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded shadow-lg">
