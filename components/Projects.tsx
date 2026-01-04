@@ -107,6 +107,16 @@ const projects = [
         tech: ["Python", "Blender", "AI"],
         links: { demo: "#", github: "https://github.com/Abdalrhman1989/memory-sculptor" },
         badge: "AI Art"
+    },
+    {
+        id: 11,
+        title: "Personal Portfolio",
+        category: "Web App",
+        image: "/assets/project-portfolio.png",
+        description: "My personal portfolio website featuring a modern design, animations, and project showcase.",
+        tech: ["Next.js", "Framer Motion", "Tailwind CSS"],
+        links: { demo: "https://my-portfolio-git-main-abd-alrhman-aldarra-s-projects.vercel.app/", github: "https://github.com/Abdalrhman1989/portfolio" },
+        badge: "Meta"
     }
 ];
 
