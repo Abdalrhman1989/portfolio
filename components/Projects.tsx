@@ -77,10 +77,40 @@ const projects = [
         tech: ["Next.js", "TypeScript", "Tailwind CSS"],
         links: { demo: "https://triply-one-nu.vercel.app/", github: "#" },
         badge: "New"
+    },
+    {
+        id: 8,
+        title: "Neon Survivors",
+        category: "Game",
+        image: "/assets/neon-survivors.jpg",
+        description: "A high-performance top-down shooter game built with TypeScript and HTML5 Canvas. No engines, just pure code.",
+        tech: ["TypeScript", "HTML5 Canvas", "Game Dev"],
+        links: { demo: "https://neon-survivors-nine.vercel.app/", github: "https://github.com/Abdalrhman1989/Neon-Survivors-" },
+        badge: "New"
+    },
+    {
+        id: 9,
+        title: "CityForge",
+        category: "3D Tools",
+        image: "/assets/city-forge.jpg",
+        description: "A powerful Blender add-on that creates detailed procedural cities with road networks, buildings, and cinematic camera flythroughs.",
+        tech: ["Python", "Blender API", "Procedural Gen"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/-CityForge" },
+        badge: "Add-on"
+    },
+    {
+        id: 10,
+        title: "Memory Sculptor",
+        category: "3D Tools",
+        image: "/assets/memory-sculptor.jpg",
+        description: "A Python + Blender system transforming human memories into unique, abstract 3D animated sculptures.",
+        tech: ["Python", "Blender", "AI"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/memory-sculptor" },
+        badge: "AI Art"
     }
 ];
 
-const filters = ["All", "eCommerce", "SaaS", "Web App", "Data Viz"];
+const filters = ["All", "eCommerce", "SaaS", "Web App", "Data Viz", "Game", "3D Tools"];
 
 export default function Projects() {
     const [filter, setFilter] = useState("All");
