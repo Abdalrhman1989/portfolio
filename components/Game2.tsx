@@ -28,6 +28,7 @@ export default function Game2() {
     const [gameOver, setGameOver] = useState(false);
     const [level, setLevel] = useState(1);
     const [shieldActive, setShieldActive] = useState(0);
+    const [slowActive, setSlowActive] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     
     const gameRef = useRef<HTMLDivElement>(null);
@@ -40,7 +41,8 @@ export default function Game2() {
         pos: 50, 
         obstacles: [] as any[], 
         particles: [] as Particle[],
-        shieldTime: 0 
+        shieldTime: 0,
+        slowTime: 0 
     });
 
     const spawnObstacle = useCallback(() => {
@@ -80,7 +82,7 @@ export default function Game2() {
         particlesRef.current = [];
         playerX.current = 50;
         playerTargetX.current = 50;
-        setRenderState({ pos: 50, obstacles: [], particles: [], shieldTime: 0 });
+        setRenderState({ pos: 50, obstacles: [], particles: [], shieldTime: 0, slowTime: 0 });
         if (!isMuted) gameAudio.playStart();
         gameRef.current?.focus();
     };
@@ -100,9 +102,6 @@ export default function Game2() {
     useEffect(() => {
         if (!isPlaying || gameOver) return;
 
-        const baseSpeed = 1.2 + (level * 0.3);
-        const slowFactor = renderState.obstacles.some(o => o.type === "slow" && o.y > 100) ? 0.5 : 1.0; // Wait, slow is consumed on hit
-
         const update = () => {
             // Level Progression
             const currentLevel = Math.floor(score / 500) + 1;
@@ -114,8 +113,16 @@ export default function Game2() {
             // Smooth Movement
             playerX.current += (playerTargetX.current - playerX.current) * 0.2;
 
+            // Power-up durations
+            let sActive = shieldActive;
+            if (sActive > 0) sActive -= 16; // approx ms in frame
+            
+            let slowTime = slowActive;
+            if (slowTime > 0) slowTime -= 16;
+
             // Update Obstacles
-            const speed = baseSpeed * (renderState.obstacles.find(o => o.type === "slow_active") ? 0.5 : 1);
+            const baseSpeed = 1.2 + (level * 0.3);
+            const speed = baseSpeed * (slowTime > 0 ? 0.5 : 1.0);
             const moved = obstaclesRef.current.map(obs => ({ ...obs, y: obs.y + speed })).filter(obs => obs.y < 110);
             
             // Spawn logic
@@ -123,10 +130,6 @@ export default function Game2() {
             if (Math.random() < spawnChance && moved.length < 5 + level) {
                 moved.push(spawnObstacle());
             }
-
-            // Power-up durations
-            let sActive = shieldActive;
-            if (sActive > 0) sActive -= 16; // approx ms in frame
 
             // Collision Detection
             const survivingObstacles = moved.filter(obs => {
@@ -150,8 +153,7 @@ export default function Game2() {
                         if (!isMuted) gameAudio.playPowerUp();
                         return false;
                     } else if (obs.type === "slow") {
-                        // For simplicity, we'll just slow down for 3 seconds
-                        // This would need more complex state, but let's just use it
+                        slowTime = 5000;
                         spawnParticles(obs.x, obs.y, "#34d399", 15);
                         if (!isMuted) gameAudio.playPowerUp();
                         return false;
@@ -171,19 +173,21 @@ export default function Game2() {
             obstaclesRef.current = survivingObstacles;
             particlesRef.current = movedParticles;
             setShieldActive(sActive);
+            setSlowActive(slowTime);
             setScore(prev => prev + 1);
             setRenderState({ 
                 pos: playerX.current, 
                 obstacles: survivingObstacles, 
                 particles: movedParticles,
-                shieldTime: sActive
+                shieldTime: sActive,
+                slowTime: slowTime
             });
             frameRef.current = requestAnimationFrame(update);
         };
 
         frameRef.current = requestAnimationFrame(update);
         return () => cancelAnimationFrame(frameRef.current);
-    }, [isPlaying, gameOver, level, shieldActive, spawnObstacle, score, isMuted, renderState.obstacles]);
+    }, [isPlaying, gameOver, level, shieldActive, slowActive, spawnObstacle, score, isMuted, renderState.obstacles]);
 
     useEffect(() => {
         if (score > highScore) setHighScore(score);
