@@ -86,68 +86,25 @@ export default function SupportChat() {
         setIsLoading(true);
 
         try {
-            // Check if API key exists in Env or ask user to provide one
-            const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+            const { findBestResponse } = await import("@/lib/botLogic");
             
-            if (!apiKey) {
-                // Fallback / Mock behavior if no API key is set
-                setTimeout(() => {
-                    const fallbackMsg: Message = {
-                        id: (Date.now() + 1).toString(),
-                        role: "assistant",
-                        content: "I'm currently in 'Offline Mode' as the API key is not configured. But I can tell you that Abd Alrhman is an expert in Next.js and Flutter! (Please set NEXT_PUBLIC_GEMINI_API_KEY in your .env file to enable full AI capabilities.)",
-                        timestamp: new Date(),
-                    };
-                    setMessages((prev) => [...prev, fallbackMsg]);
-                    setIsLoading(false);
-                }, 1000);
-                return;
-            }
+            // Artificial delay to simulate "thinking" for a premium feel
+            setTimeout(() => {
+                const aiResponse = findBestResponse(userMsg.content);
 
-            // Real Gemini API Call using system_instruction for better persona
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    system_instruction: {
-                        parts: [{ text: SYSTEM_PROMPT }]
-                    },
-                    contents: [
-                        ...messages.slice(1).map(m => ({ // Skip the first greeting which isn't part of chat history
-                            role: m.role === "assistant" ? "model" : "user",
-                            parts: [{ text: m.content }]
-                        })),
-                        { role: "user", parts: [{ text: userMsg.content }] }
-                    ]
-                })
-            });
+                const assistantMsg: Message = {
+                    id: (Date.now() + 1).toString(),
+                    role: "assistant",
+                    content: aiResponse,
+                    timestamp: new Date(),
+                };
 
-            const data = await response.json();
-            
-            if (data.error) {
-                throw new Error(data.error.message || "API Error");
-            }
+                setMessages((prev) => [...prev, assistantMsg]);
+                setIsLoading(false);
+            }, 800 + Math.random() * 800); // Between 0.8s and 1.6s
 
-            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm processing your request. Could you please rephrase that?";
-
-            const assistantMsg: Message = {
-                id: (Date.now() + 1).toString(),
-                role: "assistant",
-                content: aiResponse,
-                timestamp: new Date(),
-            };
-
-            setMessages((prev) => [...prev, assistantMsg]);
         } catch (error: any) {
-            console.error("AI Chat Error:", error);
-            const errorMsg: Message = {
-                id: (Date.now() + 1).toString(),
-                role: "assistant",
-                content: `Error: ${error.message || "Connection failed"}. Please try again in 30 seconds.`,
-                timestamp: new Date(),
-            };
-            setMessages((prev) => [...prev, errorMsg]);
-        } finally {
+            console.error("Bot Error:", error);
             setIsLoading(false);
         }
     };
