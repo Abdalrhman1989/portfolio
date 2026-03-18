@@ -89,7 +89,7 @@ export default function AboutGrid() {
                         </div>
 
                         <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-10 group-hover/loc:opacity-30 transition-opacity">
-                             <div className="absolute -right-6 -bottom-6 text-[140px] font-black text-foreground italic select-none">DK</div>
+                             <div className="absolute -right-4 -bottom-4 text-[100px] font-black text-foreground italic select-none">DK</div>
                         </div>
                         <p className="text-xs text-muted-foreground relative z-20 mt-4 font-medium italic">Danish quality meets global innovation.</p>
                     </BentoCard>
