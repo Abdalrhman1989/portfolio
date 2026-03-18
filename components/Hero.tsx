@@ -24,7 +24,7 @@ export default function Hero() {
                         Hi, I'm <span className="text-primary">Abd Alrhman</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10">
-                        Web Developer & UI/UX Designer building scalable, user-focused digital products.
+                        Software Developer & Full Stack Mobile App Developer building scalable, user-focused digital products.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

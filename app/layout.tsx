@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Abd Alrhman | Web Developer & UI/UX Designer",
-  description: "Portfolio of Abd Alrhman Talaat Alshaar Dit Darra, a Web Developer & UI/UX Designer based in Odense, Denmark.",
+  title: "Abd Alrhman | Software Developer & Full Stack Mobile App Developer",
+  description: "Portfolio of Abd Alrhman Talaat Alshaar Dit Darra, a Software Developer & Full Stack Mobile App Developer based in Odense, Denmark.",
 };
 
 export default function RootLayout({

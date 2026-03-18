@@ -1,6 +1,6 @@
-# 🚀 Premium Developer Portfolio
+# 🚀 Premium Software Developer Portfolio
 
-A high-performance, immersive developer portfolio built with **Next.js 16 (App Router)**, **Tailwind CSS**, and **Framer Motion**. Featuring high-end 3D visuals, interactive mini-games, and an AI-powered personal assistant.
+A high-performance, immersive developer portfolio built by **Abd Alrhman**, a Software Developer & Full Stack Mobile App Developer. Featuring high-end 3D visuals, interactive mini-games, and an AI-powered personal assistant.
 
 ![Portfolio Preview](https://my-portfolio-git-main-abd-alrhman-aldarra-s-projects.vercel.app/og-image.png)
 

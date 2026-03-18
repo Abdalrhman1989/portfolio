@@ -37,7 +37,7 @@ export default function About() {
                             About <span className="text-primary">Me</span>
                         </h2>
                         <p className="text-muted-foreground mb-6 leading-relaxed">
-                            I'm Abd Alrhman Talaat Alshaar Dit Darra, a passionate Web Developer and UI/UX Designer based in Odense, Denmark.
+                            I'm Abd Alrhman Talaat Alshaar Dit Darra, a passionate Software Developer & Full Stack Mobile App Developer based in Odense, Denmark.
                             With a background in Multimedia Design and a Bachelor's degree in Web Development, I bridge the gap between design and engineering.
                         </p>
                         <p className="text-muted-foreground mb-8 leading-relaxed">

@@ -18,9 +18,10 @@ Your goal is to represent him professionally and answer any questions about his 
 
 PROFLIE SUMMARY:
 - Name: Abd Alrhman Talaat Alshaar Dit Darra
+- Title: Software Developer & Full Stack Mobile App Developer
 - Location: Odense, Denmark
 - Education: Bachelor's degree in Web Development & Multimedia Design.
-- Expertise: Bridging the gap between UI/UX design and complex web/mobile engineering.
+- Expertise: Building scalable, user-focused digital products and bridging the gap between design and engineering.
 
 CORE SKILLS:
 - Frontend: React, Next.js, Tailwind CSS, Framer Motion, GSAP, HTML5 Canvas.
@@ -103,14 +104,16 @@ export default function SupportChat() {
                 return;
             }
 
-            // Real Gemini API Call
+            // Real Gemini API Call using system_instruction for better persona
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                    system_instruction: {
+                        parts: [{ text: SYSTEM_PROMPT }]
+                    },
                     contents: [
-                        { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
-                        ...messages.map(m => ({
+                        ...messages.slice(1).map(m => ({ // Skip the first greeting which isn't part of chat history
                             role: m.role === "assistant" ? "model" : "user",
                             parts: [{ text: m.content }]
                         })),
@@ -120,7 +123,12 @@ export default function SupportChat() {
             });
 
             const data = await response.json();
-            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I encountered an error. How else can I help you?";
+            
+            if (data.error) {
+                throw new Error(data.error.message || "API Error");
+            }
+
+            const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm processing your request. Could you please rephrase that?";
 
             const assistantMsg: Message = {
                 id: (Date.now() + 1).toString(),
@@ -130,8 +138,15 @@ export default function SupportChat() {
             };
 
             setMessages((prev) => [...prev, assistantMsg]);
-        } catch (error) {
+        } catch (error: any) {
             console.error("AI Chat Error:", error);
+            const errorMsg: Message = {
+                id: (Date.now() + 1).toString(),
+                role: "assistant",
+                content: `Error: ${error.message || "Connection failed"}. Please try again in 30 seconds.`,
+                timestamp: new Date(),
+            };
+            setMessages((prev) => [...prev, errorMsg]);
         } finally {
             setIsLoading(false);
         }
