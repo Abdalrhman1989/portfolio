@@ -10,117 +10,277 @@ import Image from "next/image"; // Added Import
 const projects = [
     {
         id: 1,
+        title: "DeenPath",
+        category: "Web App",
+        image: "/assets/projects/deenpath.png",
+        description: "A premium Islamic companion app featuring Quranic insights, Hadith, and prayer tools with a highly polished dashboard.",
+        tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+        links: { demo: "https://deenpath.vercel.app", github: "#" },
+        badge: "Featured"
+    },
+    {
+        id: 2,
+        title: "ServixerSpace",
+        category: "Agency",
+        image: "/assets/projects/servixerspace.png",
+        description: "Official website for a creative tech agency specializing in design, development, and film production.",
+        tech: ["Next.js", "Framer Motion", "GSAP"],
+        links: { demo: "https://servixerspace.com", github: "https://github.com/Abdalrhman1989/servixerspace.git" },
+        badge: "Live"
+    },
+    {
+        id: 3,
         title: "AirPlate",
-        category: "Web App", // Categorized as Web App / Mobile
-        image: "/assets/project-airplate.jpg",
+        category: "Mobile",
+        image: "/assets/projects/airplate.png",
         description: "Mobile application for drone tracking and monitoring data using Network/Direct Remote ID.",
-        tech: ["Flutter", "Dart", "Mobile", "iOS"],
+        tech: ["Flutter", "Dart", "Firebase", "Maps API"],
         links: { demo: "https://apps.apple.com/dk/app/airplate/id6670435015?l=da", github: "#" },
         badge: "App Store"
     },
     {
-        id: 2,
-        title: "uBreak WeFix",
-        category: "eCommerce",
-        image: "/assets/project-ubreak.jpg",
-        description: "Developed a comprehensive WooCommerce platform for electronics repair and sales.",
-        tech: ["WordPress", "WooCommerce", "PHP", "CSS3"],
-        links: { demo: "https://ubreakwefix.dk/", github: "#" },
-        badge: "Live Site"
-    },
-    {
-        id: 3,
-        title: "Vue Todo App",
-        category: "Web App",
-        image: "/assets/project-todo.jpg",
-        description: "A clean and functional Todo application built with Vue.js.",
-        tech: ["Vue.js", "JavaScript", "Local Storage"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/vue-todo-app" },
-        badge: "Open Source"
-    },
-    {
         id: 4,
-        title: "ExploreEase",
-        category: "Web App",
-        image: "/assets/project-exploreease.jpg",
-        description: "A travel platform designed to simplify trip planning and exploration.",
-        tech: ["JavaScript", "Web API", "Frontend"],
-        links: { demo: "https://letsexploreease.com/", github: "https://github.com/Abdalrhman1989/ExploreEase.git" },
-        badge: null
+        title: "Elevate OS",
+        category: "Marketing",
+        image: "/assets/projects/elevateos.png",
+        description: "A high-end marketing agency landing page for 'Elevate,' featuring personalized growth tools for businesses.",
+        tech: ["React", "Custom CSS", "Performance Optimized"],
+        links: { demo: "https://elevate-os-v1.vercel.app", github: "#" },
+        badge: "Corporate"
     },
     {
         id: 5,
-        title: "Geografisk Have",
-        category: "Web App",
-        image: "/assets/project-geografisk.jpg",
-        description: "Interactive website for Geografisk Have, featuring event calendars and garden maps.",
-        tech: ["HTML", "SCSS", "JavaScript"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/Geografisk-Have-abd.git" },
-        badge: null
+        title: "ExploreEase (Tawny)",
+        category: "Booking",
+        image: "/assets/projects/exploreease.png",
+        description: "Smart travel and hotel booking platform with interactive map integration and seamless itinerary management.",
+        tech: ["Next.js", "Firebase", "Tailwind"],
+        links: { demo: "https://explore-ease-tawny.vercel.app", github: "https://github.com/Abdalrhman1989/ExploreEase.git" },
+        badge: "Stable"
     },
     {
         id: 6,
-        title: "ServixerSpace",
-        category: "SaaS",
-        image: "/assets/project-servixer.jpg",
-        description: "A service-oriented platform connecting providers with clients.",
-        tech: ["React", "Node.js", "Full Stack"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/servixerspace.git" },
-        badge: null
+        title: "uBreakWeFix",
+        category: "Services",
+        image: "/assets/projects/ubreakwefix.png",
+        description: "A professional device repair service platform for phones, tablets, and computers across Denmark.",
+        tech: ["React", "Tailwind", "Node.js"],
+        links: { demo: "https://ubreakwefix.vercel.app", github: "#" },
+        badge: "Commercial"
     },
     {
         id: 7,
-        title: "Triply",
-        category: "SaaS",
-        image: "/assets/project-triply.jpg",
-        description: "A comprehensive management platform with admin dashboard, analytics, and user management.",
-        tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-        links: { demo: "https://triply-one-nu.vercel.app/", github: "#" },
-        badge: "New"
+        title: "Sud Event Decoration",
+        category: "Agency",
+        image: "/assets/projects/sud-decoration.png",
+        description: "Elegant portfolio for a luxury event planning and decoration business, showcasing high-end floral and stage design.",
+        tech: ["Next.js", "Framer Motion", "Tailwind"],
+        links: { demo: "https://sud-event-decoration.vercel.app", github: "#" },
+        badge: "Premium"
     },
     {
         id: 8,
-        title: "Neon Survivors",
-        category: "Game",
-        image: "/assets/neon-survivors.jpg",
-        description: "A high-performance top-down shooter game built with TypeScript and HTML5 Canvas. No engines, just pure code.",
-        tech: ["TypeScript", "HTML5 Canvas", "Game Dev"],
-        links: { demo: "https://neon-survivors-nine.vercel.app/", github: "https://github.com/Abdalrhman1989/Neon-Survivors-" },
-        badge: "New"
+        title: "Basmeh",
+        category: "Social",
+        image: "/assets/projects/basmeh.png",
+        description: "A community-focused creative platform for sharing, discovering, and collaborating on innovative projects.",
+        tech: ["React", "Custom Icons", "Shared State"],
+        links: { demo: "https://basmeh-five.vercel.app", github: "#" },
+        badge: "Community"
     },
     {
         id: 9,
-        title: "CityForge",
+        title: "Vavion",
         category: "3D Tools",
-        image: "/assets/city-forge.jpg",
-        description: "A powerful Blender add-on that creates detailed procedural cities with road networks, buildings, and cinematic camera flythroughs.",
-        tech: ["Python", "Blender API", "Procedural Gen"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/-CityForge" },
-        badge: "Add-on"
+        image: "/assets/projects/vavion.png",
+        description: "A 3D aviation logistics visualizer featuring real-time flight tracking and aircraft fleet management.",
+        tech: ["Three.js", "React Three Fiber", "Logistics API"],
+        links: { demo: "https://vavion.vercel.app", github: "#" },
+        badge: "New"
     },
     {
         id: 10,
-        title: "Memory Sculptor",
-        category: "3D Tools",
-        image: "/assets/memory-sculptor.jpg",
-        description: "A Python + Blender system transforming human memories into unique, abstract 3D animated sculptures.",
-        tech: ["Python", "Blender", "AI"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/memory-sculptor" },
-        badge: "AI Art"
+        title: "Amera Kraidi",
+        category: "Portfolio",
+        image: "/assets/projects/amera-kraidi.png",
+        description: "Artistic fashion and textile design portfolio showcasing unique collections, sketches, and textures.",
+        tech: ["Next.js", "Tailwind CSS", "GSAP"],
+        links: { demo: "https://amera-kraidi.vercel.app", github: "#" },
+        badge: "Design"
     },
     {
         id: 11,
+        title: "Story Trip AI",
+        category: "AI",
+        image: "/assets/projects/storytrip.png",
+        description: "AI-powered travel story generator that transforms your trip details into engaging narratives and journals.",
+        tech: ["Next.js", "OpenAI API", "Framer Motion"],
+        links: { demo: "https://story-trip-ai.vercel.app", github: "#" },
+        badge: "AI Native"
+    },
+    {
+        id: 12,
+        title: "Zenith Apex Overdrive",
+        category: "Game",
+        image: null,
+        description: "High-octane futuristic racing experience featuring cutting-edge graphics and intense competitive play.",
+        tech: ["Next.js", "WebGL", "Framer Motion"],
+        links: { demo: "https://zenith-apex-overdrive.vercel.app", github: "#" },
+        badge: "High Performance"
+    },
+    {
+        id: 13,
+        title: "Triply",
+        category: "Booking",
+        image: null,
+        description: "Smart travel itinerary planner with integrated booking features and interactive destination guides.",
+        tech: ["Next.js", "Sanity.io", "Tailwind"],
+        links: { demo: "https://triply-one-nu.vercel.app", github: "#" },
+        badge: "Travel"
+    },
+    {
+        id: 14,
+        title: "Snake Neo",
+        category: "Game",
+        image: "/assets/projects/snakeneo.png",
+        description: "A modern, arcade-style snake game with neon aesthetics, optimized for both mobile and web.",
+        tech: ["React", "Canvas API", "Audio API"],
+        links: { demo: "https://snake-neo-mobile.vercel.app", github: "#" },
+        badge: "Arcade"
+    },
+    {
+        id: 15,
+        title: "Flux",
+        category: "Blockchain",
+        image: "/assets/projects/flux.png",
+        description: "A Web3 platform integrated with Solana and Metaplex for advanced token and NFT management.",
+        tech: ["Next.js", "Web3.js", "Solana SDK"],
+        links: { demo: "https://flux-mauve-ten.vercel.app", github: "#" },
+        badge: "Web3"
+    },
+    {
+        id: 16,
+        title: "Arcadeverse",
+        category: "Social",
+        image: "/assets/projects/arcadeverse.png",
+        description: "A community gaming platform built for arcade enthusiasts and social gaming interactions.",
+        tech: ["Next.js", "TypeScript", "Socket.io"],
+        links: { demo: "https://aracdeverse-next.vercel.app", github: "#" },
+        badge: "Community"
+    },
+    {
+        id: 17,
+        title: "Hover Drift",
+        category: "Game",
+        image: "/assets/projects/hoverdrift.png",
+        description: "High-speed 3D hover-racing game with physics-based mechanics and competitive rankings.",
+        tech: ["Three.js", "React", "Physics Engine"],
+        links: { demo: "https://hover-drift.vercel.app", github: "#" },
+        badge: "High Tech"
+    },
+    {
+        id: 18,
+        title: "Nexus Infinity Elite",
+        category: "Dashboards",
+        image: null,
+        description: "Advanced infrastructure monitoring system with predictive analytics and high-density data visualization.",
+        tech: ["Next.js", "Advanced Charts", "Real-time API"],
+        links: { demo: "https://nexus-infinity-elite.vercel.app", github: "#" },
+        badge: "Pro"
+    },
+    {
+        id: 19,
+        title: "Nexus Pro",
+        category: "Dashboards",
+        image: "/assets/projects/nexus.png",
+        description: "Unified infrastructure control center for smart city management and resource monitoring.",
+        tech: ["Next.js", "Data Viz", "IoT Integration"],
+        links: { demo: "https://nexus-vert-gamma-96.vercel.app", github: "#" },
+        badge: "System"
+    },
+    {
+        id: 20,
+        title: "Neon Drift",
+        category: "Game",
+        image: null,
+        description: "Retro-futuristic driving experience featuring synthwave visuals and responsive 3D environments.",
+        tech: ["Three.js", "React", "Shaders"],
+        links: { demo: "https://neon-drift-pi.vercel.app", github: "#" },
+        badge: "Visual"
+    },
+    {
+        id: 21,
+        title: "Neon Survivors",
+        category: "Game",
+        image: null,
+        description: "Elite survival game set in a neon-drenched dystopia. High difficulty and addictive retro mechanics.",
+        tech: ["Vite", "React", "Fast Canvas"],
+        links: { demo: "https://neon-survivors-nine.vercel.app", github: "#" },
+        badge: "Action"
+    },
+    {
+        id: 22,
+        title: "LinkFlow",
+        category: "Web App",
+        image: "/assets/projects/linkflow.png",
+        description: "A modern, creator-focused link-in-bio platform with deep social integration and analytics.",
+        tech: ["React", "Node.js", "PostgreSQL"],
+        links: { demo: "https://linkflow-teal.vercel.app", github: "#" },
+        badge: "Creator Tool"
+    },
+    {
+        id: 23,
+        title: "Trix Card Game",
+        category: "Game",
+        image: null,
+        description: "Digital implementation of the popular Middle Eastern card game Trix, built with robust game logic.",
+        tech: ["TypeScript", "State Management", "Game Logic"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/Trix-Card-Game" },
+        badge: "Logic"
+    },
+    {
+        id: 24,
+        title: "RESTAVO",
+        category: "Services",
+        image: null,
+        description: "Complete restaurant operating system for table booking, order tracking, and inventory management.",
+        tech: ["TypeScript", "Next.js", "Prisma"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/RESTAVO" },
+        badge: "B2B"
+    },
+    {
+        id: 25,
+        title: "CityForge",
+        category: "3D Tools",
+        image: null,
+        description: "Blender add-on for procedural city generation, creating complex road networks and buildings with ease.",
+        tech: ["Python", "Blender API", "Geometry Nodes"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/-CityForge" },
+        badge: "Open Source"
+    },
+    {
+        id: 26,
+        title: "Memory Sculptor",
+        category: "AI",
+        image: null,
+        description: "Data-driven memory visualization tool that transforms cognitive training data into abstract 3D forms.",
+        tech: ["Python", "AI", "Matplotlib"],
+        links: { demo: "#", github: "https://github.com/Abdalrhman1989/memory-sculptor" },
+        badge: "AI Research"
+    },
+    {
+        id: 27,
         title: "Personal Portfolio",
         category: "Web App",
         image: "/assets/project-portfolio.png",
-        description: "My personal portfolio website featuring a modern design, animations, and project showcase.",
+        description: "The very site you're exploring! A premium showcase of work using advanced web technologies.",
         tech: ["Next.js", "Framer Motion", "Tailwind CSS"],
-        links: { demo: "https://my-portfolio-git-main-abd-alrhman-aldarra-s-projects.vercel.app/", github: "https://github.com/Abdalrhman1989/portfolio" },
-        badge: "Meta"
+        links: { demo: "/", github: "https://github.com/Abdalrhman1989/portfolio" },
+        badge: "Current"
     }
 ];
 
-const filters = ["All", "eCommerce", "SaaS", "Web App", "Data Viz", "Game", "3D Tools"];
+const filters = ["All", "Web App", "Agency", "Mobile", "Marketing", "Booking", "Services", "Game", "Blockchain", "Social", "AI", "Dashboards", "3D Tools", "Portfolio"];
 
 export default function Projects() {
     const [filter, setFilter] = useState("All");

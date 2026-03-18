@@ -8,15 +8,34 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
     { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
+    { name: "Services", href: "#services" },
+    { name: "Workflow", href: "#process" },
     { name: "Projects", href: "#projects" },
     { name: "Experience", href: "#experience" },
+    { name: "FAQ", href: "#faq" },
     { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [time, setTime] = useState("");
+
+    useEffect(() => {
+        const updateTime = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+            setTime(timeString);
+        };
+        const timer = setInterval(updateTime, 1000);
+        updateTime();
+        return () => clearInterval(timer);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -34,10 +53,20 @@ export default function Navbar() {
             )}
         >
             <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-                {/* Logo */}
-                <Link href="/" className="text-xl font-bold tracking-tight hover:text-primary transition-colors">
-                    Abd Alrhman<span className="text-primary">.</span>
-                </Link>
+                {/* Logo & Time Group */}
+                <div className="flex items-center gap-6">
+                    <Link href="/" className="text-xl font-bold tracking-tight hover:text-primary transition-colors">
+                        Abd Alrhman<span className="text-primary">.</span>
+                    </Link>
+                    
+                    <div className="hidden lg:flex flex-col border-l border-border/50 pl-6">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-0.5">Odense, DK</span>
+                        <div className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+                            <span className="text-xs font-mono font-bold tracking-tighter text-foreground/80">{time}</span>
+                        </div>
+                    </div>
+                </div>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8">

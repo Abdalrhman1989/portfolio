@@ -1,17 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Laptop, Zap, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import HeroScene from "./HeroScene";
 
 export default function Hero() {
     return (
-        <section className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
-            {/* Background Gradients */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-                <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[120px]" />
-                <div className="absolute top-[30%] -right-[10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[100px]" />
-            </div>
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+            {/* 3D Background Scene */}
+            <HeroScene />
 
             <div className="container relative z-10 px-6 text-center">
                 <motion.div
