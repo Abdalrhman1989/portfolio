@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Premium Developer Portfolio
 
-## Getting Started
+A high-performance, immersive developer portfolio built with **Next.js 16 (App Router)**, **Tailwind CSS**, and **Framer Motion**. Featuring high-end 3D visuals, interactive mini-games, and an AI-powered personal assistant.
 
-First, run the development server:
+![Portfolio Preview](https://my-portfolio-git-main-abd-alrhman-aldarra-s-projects.vercel.app/og-image.png)
+
+## ✨ Core Features
+
+### 🏢 **Interactive Showcase**
+- **Living Portfolio AI**: A custom Support Chat integrated with **Gemini 2.0 Flash** that answers questions about career, skills, and projects in real-time.
+- **Dynamic Projects Grid**: Filterable project gallery with 3D hover effects and direct links to live demos/source code.
+- **3D Tech Cloud**: A floating interactive tech stack visualization built with custom React components.
+
+### 🎮 **Mini-Games Section**
+- **Tech Runner**: A neon-themed arcade game built with pure Canvas/React.
+    - Features: Mobile-responsive (touch/pointer) controls, arrow key support, level progression, and power-ups (Shield/Time-Sync).
+    - Custom Procedural Audio: Dynamic sound engine using the Web Audio API.
+
+### 🎨 **Premium UI/UX**
+- **Glassmorphism Design**: High-end translucent surfaces with sophisticated blur effects.
+- **Micro-Animations**: Extensive use of Framer Motion for smooth transitions, layout changes, and interactive elements.
+- **Theme Engine**: Integrated Dark Mode with custom neon primary accents.
+- **Custom Cursor**: Interactive magnetic cursor that reacts to screen elements.
+
+## 🛠️ Technology Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/)
+- **Styling**: [Tailwind CSS 4.0](https://tailwindcss.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **AI Engine**: [Google Gemini Pro 2.0](https://aistudio.google.com/)
+- **Deployment**: [Vercel](https://vercel.com/)
+
+## 🚀 Getting Started
+
+### 📦 Installation
+
+```bash
+git clone https://github.com/Abdalrhman1989/portfolio.git
+cd portfolio
+npm install
+```
+
+### 🔑 Environment Variables
+
+Create a `.env.local` file in the root directory and add:
+
+```env
+NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 🏃 Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📂 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/components`: Modular UI components (Game, SupportChat, Navbar, etc.)
+- `/app`: Next.js App Router pages and layouts
+- `/lib`: Utility functions and Audio engine
+- `/public`: Assets, icons, and 3D models
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👨‍💻 Author
 
-## Learn More
+**Abd Alrhman Talaat Alshaar Dit Darra**
+- 🌍 [Portfolio](https://portfolio-abdal-2026.vercel.app)
+- 💼 [LinkedIn](https://linkedin.com/in/abd-al-rhman-aldarra-8a24bb18b)
+- 📧 [Email](mailto:abdalrhmantalat@gmail.com)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Created with ❤️ using modern web technologies.*

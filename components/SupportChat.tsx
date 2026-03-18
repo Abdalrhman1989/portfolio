@@ -236,26 +236,24 @@ export default function SupportChat() {
 
             {/* Floating Toggle Button */}
             <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className={`relative w-16 h-16 rounded-full overflow-hidden shadow-2xl border-2 transition-all duration-300 ${
-                    isOpen ? "border-primary" : "border-border hover:border-primary/50"
-                }`}
+                className="relative w-20 h-20 transition-all duration-300 drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]"
             >
-                <div className="relative w-full h-full bg-card">
+                <div className="relative w-full h-full">
                     <Image
                         src="/assets/chat-avatar.png"
                         alt="Chat Icon"
                         fill
-                        className="object-cover"
+                        className="object-contain" // Changed to contain to show full shield
+                        priority
                     />
-                    <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors" />
                 </div>
                 
                 {/* Notification Badge */}
                 {!isOpen && (
-                    <div className="absolute top-0 right-0 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-[10px] font-bold text-primary-foreground border-2 border-background animate-bounce">
+                    <div className="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-[10px] font-bold text-primary-foreground border-2 border-background animate-bounce z-10 shadow-lg">
                         1
                     </div>
                 )}

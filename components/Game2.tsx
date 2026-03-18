@@ -89,15 +89,22 @@ export default function Game2() {
 
     const toggleMute = () => setIsMuted(prev => !prev);
 
+    const handlePointerMove = (e: React.PointerEvent | React.MouseEvent) => {
+        if (!isPlaying || gameOver || !gameRef.current) return;
+        const rect = gameRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        playerTargetX.current = Math.max(5, Math.min(95, x));
+    };
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isPlaying) return;
-            if (e.key === "ArrowLeft") playerTargetX.current = Math.max(playerTargetX.current - 12, 5);
-            if (e.key === "ArrowRight") playerTargetX.current = Math.min(playerTargetX.current + 12, 95);
+            if (!isPlaying || gameOver) return;
+            if (e.key === "ArrowLeft") playerTargetX.current = Math.max(playerTargetX.current - 10, 5);
+            if (e.key === "ArrowRight") playerTargetX.current = Math.min(playerTargetX.current + 10, 95);
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isPlaying]);
+    }, [isPlaying, gameOver]);
 
     useEffect(() => {
         if (!isPlaying || gameOver) return;
@@ -228,7 +235,9 @@ export default function Game2() {
                     <div 
                         ref={gameRef}
                         tabIndex={0}
-                        className="relative h-[600px] border-4 border-border/50 rounded-[50px] bg-[#0A0A0B] overflow-hidden backdrop-blur-md shadow-[0_0_50px_rgba(0,0,0,0.5)] focus:outline-none"
+                        onPointerMove={handlePointerMove}
+                        onPointerDown={handlePointerMove}
+                        className="relative h-[600px] border-4 border-border/50 rounded-[50px] bg-[#0A0A0B] overflow-hidden backdrop-blur-md shadow-[0_0_50px_rgba(0,0,0,0.5)] focus:outline-none cursor-crosshair"
                     >
                         {/* Grid Background */}
                         <div className="absolute inset-0 opacity-10 pointer-events-none" 
@@ -248,7 +257,7 @@ export default function Game2() {
                                             <div className="w-14 h-14 bg-muted rounded-2xl flex items-center justify-center border border-border">➡️</div>
                                         </div>
                                         <h4 className="text-xl font-black uppercase tracking-widest text-white mb-2 italic">Neural Interface Mode</h4>
-                                        <p className="text-xs text-muted-foreground font-medium tracking-widest mb-6">USE ARROW KEYS TO NAVIGATE</p>
+                                        <p className="text-[10px] text-muted-foreground font-medium tracking-widest mb-6">MOVE MOUSE OR USE ARROWS</p>
                                         
                                         <div className="grid grid-cols-2 gap-4 text-left">
                                             <div className="flex items-center gap-2 text-[10px] text-blue-400 font-bold uppercase"><Shield className="w-3 h-3" /> Shield v1.0</div>
@@ -328,33 +337,41 @@ export default function Game2() {
                             </div>
                         </div>
 
-                        {/* Player */}
+                        {/* Player / ZAP Module */}
                         <motion.div 
                             animate={{ x: `${renderState.pos}%` }}
                             transition={{ type: "spring", damping: 15, stiffness: 200 }}
-                            className="absolute bottom-12 left-0 -ml-6 z-20"
+                            className="absolute bottom-12 left-0 -ml-8 z-20"
                         >
-                            <div className={`relative w-12 h-12 flex items-center justify-center transition-all duration-300`}>
+                            <div className={`relative w-16 h-16 flex items-center justify-center transition-all duration-300`}>
                                 {/* Shield visual */}
                                 <AnimatePresence>
                                     {renderState.shieldTime > 0 && (
                                         <motion.div 
                                             initial={{ scale: 0, opacity: 0 }}
-                                            animate={{ scale: 1.5, opacity: 1 }}
-                                            exit={{ scale: 2, opacity: 0 }}
-                                            className="absolute inset-0 rounded-full border-2 border-blue-400/50 bg-blue-400/10 shadow-[0_0_30px_rgba(96,165,250,0.4)]"
+                                            animate={{ scale: 1.8, opacity: 1 }}
+                                            exit={{ scale: 2.2, opacity: 0 }}
+                                            className="absolute inset-0 rounded-full border-4 border-blue-400/80 bg-blue-400/20 shadow-[0_0_40px_rgba(96,165,250,0.6)]"
                                         />
                                     )}
                                 </AnimatePresence>
                                 
-                                <div className={`w-full h-full ${renderState.shieldTime > 0 ? 'bg-blue-400 shadow-[0_0_30px_rgba(96,165,250,0.8)]' : 'bg-primary shadow-[0_0_40px_rgba(20,184,166,0.6)]'} rounded-2xl flex items-center justify-center border-2 border-white/20 transform rotate-45`}>
+                                {/* Main Module Visual */}
+                                <div className={`w-full h-full relative ${renderState.shieldTime > 0 ? 'bg-blue-400 shadow-[0_0_40px_rgba(96,165,250,1)]' : 'bg-[#121214] shadow-[0_0_50px_rgba(239,68,68,0.4)]'} rounded-2xl flex items-center justify-center border-2 ${renderState.shieldTime > 0 ? 'border-white' : 'border-red-600'} transform rotate-45 group-hover:scale-110 transition-transform`}>
                                     <div className="-rotate-45">
-                                        <Zap className={`w-7 h-7 ${renderState.shieldTime > 0 ? 'text-blue-950' : 'text-primary-foreground'} fill-current`} />
+                                        <Zap className={`w-9 h-9 ${renderState.shieldTime > 0 ? 'text-blue-950' : 'text-red-500'} fill-current drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]`} />
                                     </div>
+                                    
+                                    {/* Inner circuitry effect */}
+                                    <div className="absolute inset-1 border border-primary/20 rounded-xl" />
                                 </div>
                                 
-                                {/* Engine Glow */}
-                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4 h-8 bg-gradient-to-t from-transparent to-primary/40 blur-sm rounded-full" />
+                                {/* Thruster / Engine Trails */}
+                                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
+                                    <div className="w-1.5 h-6 bg-gradient-to-t from-transparent via-primary/40 to-primary/80 blur-[2px] rounded-full animate-pulse" />
+                                    <div className="w-2 h-8 bg-gradient-to-t from-transparent via-red-500/40 to-red-500/80 blur-[1px] rounded-full animate-pulse" />
+                                    <div className="w-1.5 h-6 bg-gradient-to-t from-transparent via-primary/40 to-primary/80 blur-[2px] rounded-full animate-pulse" />
+                                </div>
                             </div>
                         </motion.div>
 
