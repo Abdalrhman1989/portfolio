@@ -56,7 +56,7 @@ export default function SupportChat() {
         {
             id: "1",
             role: "assistant",
-            content: "Hi there! I'm Abd Alrhman's AI assistant. Ask me anything about his work, skills, or projects!",
+            content: "Welcome! I'm Abd Alrhman's personal logic agent. I'm here to answer anything about my projects (like DeenPath or CityForge), my experience at AirPlate, or how I can help you build your next big thing. What's on your mind?",
             timestamp: new Date(),
         },
     ]);
@@ -167,11 +167,31 @@ export default function SupportChat() {
                                     </div>
                                 </div>
                             ))}
+                            
+                            {/* Interactive Quick Reply Chips */}
+                            {!isLoading && messages.length <= 2 && (
+                                <div className="flex flex-wrap gap-2 pt-2 animate-in fade-in slide-in-from-bottom-2 duration-700">
+                                    {["Explore Projects", "View Experience", "Tech Stack", "Education", "Contact Bot"].map((chip) => (
+                                        <button
+                                            key={chip}
+                                            onClick={() => setInput(chip)}
+                                            className="px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                                        >
+                                            {chip}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
                             {isLoading && (
                                 <div className="flex justify-start">
                                     <div className="bg-muted p-3 rounded-2xl rounded-tl-none border border-border flex items-center gap-2">
-                                        <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                                        <span className="text-xs italic opacity-70 italic whitespace-nowrap">Neural link established...</span>
+                                        <div className="flex gap-1.5">
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:0.2s]" />
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:0.4s]" />
+                                        </div>
+                                        <span className="text-[10px] uppercase font-black opacity-50 tracking-widest italic ml-2">Analyzing...</span>
                                     </div>
                                 </div>
                             )}
