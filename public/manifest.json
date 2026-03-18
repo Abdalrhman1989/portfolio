@@ -1,0 +1,22 @@
+{
+  "name": "Abd Alrhman Darra | Software Developer",
+  "short_name": "Abd Darra",
+  "description": "Premium Portfolio of Abd Alrhman Darra, Software Developer & Full Stack Mobile App Developer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ef4444",
+  "icons": [
+    {
+      "src": "/assets/chat-avatar.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/chat-avatar.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

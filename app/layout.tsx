@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -14,6 +14,26 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Abd Alrhman | Software Developer & Full Stack Mobile App Developer",
   description: "Portfolio of Abd Alrhman Talaat Alshaar Dit Darra, a Software Developer & Full Stack Mobile App Developer based in Odense, Denmark.",
+  metadataBase: new URL("https://abdalrhmanaldarra.com"),
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/assets/chat-avatar.png",
+    apple: "/assets/chat-avatar.png",
+  },
+  themeColor: "#ef4444",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Abd Darra",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ef4444",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

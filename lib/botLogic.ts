@@ -8,104 +8,127 @@ export const portfolioData = {
         location: "Odense, Denmark 🇩🇰",
         born: 1989,
         education: "Bachelor's degree in Web Development & Multimedia Design from UCL University College (Class of 2024)",
-        expertise: "Bridging UI/UX design and complex engineering for scalable digital products."
+        expertise: "Bridging UI/UX design and complex engineering for scalable digital products.",
+        philosophy: "I believe in 'Functional Aesthetics'—where beauty is never at the expense of performance or usability. Every animation, pixel, and line of code must serve a purpose."
     },
+    services: [
+        { title: "Web Development", desc: "High-performance web applications using the latest Next.js 15 and React technology." },
+        { title: "AI & Coding Agents", desc: "Implementing advanced AI agents, customized LLM workflows, and intelligent coding automation systems." },
+        { title: "Mobile App Development", desc: "Cross-platform mobile solutions with Flutter and React Native for iOS and Android." },
+        { title: "3D Design & Motion", desc: "Immersive 3D visuals, cinematic motion graphics (Blender/GSAP)." },
+        { title: "Automation & APIs", desc: "Robust API architectures and complex automation tunnels." },
+        { title: "UI/UX Design", desc: "Intuitive digital experiences combining aesthetics with conversion-focused journeys." },
+        { title: "Cinematic Drone & Photo", desc: "Professional 4K drone pilot and photography services." }
+    ],
     experience: [
         { 
             company: "AirPlate", 
             role: "Mobile App Developer", 
             period: "06/2024 - 09/2024", 
-            details: "Built drone monitoring systems using Flutter and Direct Remote ID tech. Expert in drone scanners." 
+            details: "Developed drone monitoring systems using Network/Direct Remote ID and drone scanners. Specialized in Flutter and mobile technologies." 
         },
         { 
             company: "Self-Employed / Freelance", 
             role: "Full Stack Developer", 
             period: "2021 - Present", 
-            details: "Crafting custom SaaS and high-end web solutions using Next.js, React, and modern UI/UX architecture." 
+            details: "Crafting custom SaaS and premium web solutions with Next.js and modern UI/UX architecture." 
         },
         { 
             company: "IWCS", 
             role: "Film Producer & Designer", 
             period: "2020 - 2021", 
-            details: "Produced advertising materials, animations, and tutorials with high visual impact." 
+            details: "Animation, graphic design, and production of advertising materials and tutorials." 
         },
         { 
-            company: "uBreakWeFix", 
+            company: "Ubreak Wefix", 
             role: "Web Developer", 
             period: "2018 - 2020", 
-            details: "Lead WooCommerce dev managing complex store systems and inventory integrations." 
+            details: "Lead developer for WooCommerce platform. Managed maintenance, feature updates, and inventory system integration." 
         }
     ],
     projects: [
-        { name: "DeenPath", tech: "Next.js", desc: "A premium Islamic companion app focusing on high-end user experience." },
+        { name: "DeenPath", tech: "Next.js", desc: "Premium Islamic companion app focusing on high-end user experience." },
         { name: "ServixerSpace", tech: "Framer Motion", desc: "Agency portfolio showcasing advanced animations and interaction design." },
         { name: "AirPlate App", tech: "Flutter", desc: "Drone tracking system available on the App Store." },
         { name: "CityForge", tech: "Python/Blender", desc: "Procedural city generator built for Blender 4.x using Geometry Nodes." },
         { name: "Neon Survivors", tech: "TypeScript", desc: "High-performance top-down shooter game." },
-        { name: "Tech Runner", tech: "React/Canvas", desc: "Interactive runner game with procedural audio." },
-        { name: "Memory Sculptor", tech: "Python/Blender", desc: "Transforms human memories into unique 3D abstract sculptures." }
+        { name: "Tech Runner", tech: "React/Canvas", desc: "Interactive runner game with procedural audio." }
     ],
     skills: {
         frontend: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "GSAP", "Three.js"],
-        mobile: ["Flutter", "Dart", "Firebase", "iOS/Android"],
-        backend: ["Node.js", "PostgreSQL", "Prisma", "PHP", "WooCommerce"],
-        creative: ["Blender", "3D Modeling", "Python API", "UI/UX Architecture", "Video Production"]
+        mobile: ["Flutter", "Dart", "Firebase", "iOS", "Android"],
+        backend: ["Node.js", "PostgreSQL", "Prisma", "PHP", "WooCommerce", "APIs"],
+        creative: ["Blender", "3D Animation", "Python API", "Cinematic Drone Photography", "UI/UX Architecture"]
     },
+    faq: [
+        { q: "Design Philosophy", a: "I focus on Functional Aesthetics—ensuring performance matches the beauty." },
+        { q: "Scalability", a: "I use modular, type-safe architectures in Next.js and TypeScript." },
+        { q: "International Work", a: "Yes, I work globally from Odense, Denmark." }
+    ],
     socials: {
         discord: "abdalrhmanaldarra",
         github: "Abdalrhman1989",
         linkedin: "abd-al-rhman-aldarra-8a24bb18b",
-        instagram: "abdalrhman.darra"
+        instagram: "abdalrhman.darra",
+        portfolioUrl: "abdalrhmanaldarra.com"
     }
 };
 
 const keywords = {
-    projects: ["project", "work", "build", "portfolio", "done", "made", "created", "deenpath", "servixer", "airplate", "cityforge", "game", "runner", "memory"],
+    projects: ["project", "work", "build", "portfolio", "done", "made", "deenpath", "servixer", "airplate", "cityforge", "game", "runner", "memory"],
     experience: ["experience", "job", "career", "history", "work", "resume", "cv", "airplate", "iwcs", "ubreak", "freelance"],
-    skills: ["skill", "tech", "use", "stack", "program", "code", "language", "learn", "know", "react", "next", "flutter", "blender", "python"],
-    personal: ["who", "name", "old", "age", "born", "you", "about", "location", "denmark", "odense", "live", "education", "degree", "university", "ucl"],
-    contact: ["hire", "contact", "email", "mail", "discord", "social", "message", "linkedin", "phone"]
+    skills: ["skill", "tech", "use", "stack", "program", "code", "language", "react", "next", "flutter", "blender", "python", "drone", "animation"],
+    personal: ["who", "name", "old", "age", "born", "about", "location", "denmark", "odense", "education", "degree", "university", "ucl", "philosophy", "sculptor"],
+    contact: ["hire", "contact", "email", "mail", "discord", "social", "message", "linkedin", "phone", "instagram"]
 };
 
 export const findBestResponse = (query: string): string => {
     const q = query.toLowerCase();
     
-    // Check Personal / Education
+    // Check specific project triggers
+    if (q.includes("deenpath")) return "DeenPath is a premium Islamic companion app I built using Next.js. It focuses on high-end UI/UX and religious utility.";
+    if (q.includes("airplate")) return "At AirPlate, I developed advanced drone tracking systems using Flutter and Direct Remote ID tech. It's built for precision and safety.";
+    if (q.includes("cityforge")) return "CityForge is my custom Blender add-on for procedural city generation, powered by Geometry Nodes and Python.";
+    if (q.includes("sculptor")) return "Memory Sculptor is a creative Python tool I built that transforms human memories into unique 3D abstract sculptures.";
+
+    // Logic for Personal/About
     if (keywords.personal.some(k => q.includes(k))) {
-        return `I'm ${portfolioData.bio.fullName}, a ${portfolioData.bio.role} based in ${portfolioData.bio.location}. I was born in ${portfolioData.bio.born} and hold a ${portfolioData.bio.education}. I specialize in bridging design and engineering.`;
+        if (q.includes("philosophy")) return portfolioData.bio.philosophy;
+        if (q.includes("education") || q.includes("degree") || q.includes("university")) return `I hold a ${portfolioData.bio.education}. My academic journey at UCL University College helped me bridge the gap between design and high-level engineering.`;
+        return `I'm ${portfolioData.bio.fullName}, a ${portfolioData.bio.role} based in ${portfolioData.bio.location}. I was born in ${portfolioData.bio.born} and my focus is on building scalable, user-focused digital products.`;
     }
 
-    // Check Projects
+    // Logic for Services
+    if (q.includes("service") || q.includes("offer") || q.includes("do for me") || q.includes("help")) {
+        return `I offer a wide range of high-end services including ${portfolioData.services.slice(0, 4).map(s => s.title).join(", ")}, and even Cinematic Drone Photography. You can see the full list in my Services section!`;
+    }
+
+    // Logic for Projects
     if (keywords.projects.some(k => q.includes(k))) {
-        const pList = portfolioData.projects.map(p => p.name).join(", ");
-        return `I've created several high-impact projects like ${pList}. DeenPath is my focus for high-end web dev, while CityForge shows my expertise in Blender & Python. You can find links to them in the Projects section!`;
+        const pNames = portfolioData.projects.map(p => p.name).join(", ");
+        return `I've built several high-performance projects like ${pNames}. I specialize in Next.js for web and Flutter for mobile. You can explore the interactive demos in the Projects section above!`;
     }
 
-    // Check Experience
+    // Logic for Experience
     if (keywords.experience.some(k => q.includes(k))) {
-        const exp = portfolioData.experience[0]; // Get most recent
-        return `My professional journey includes being a ${exp.role} at ${exp.company} (${exp.period}), and I've been a Full Stack Freelancer since 2021. I've also led WooCommerce developments at uBreakWeFix. Check my Experience section for the full timeline!`;
+        const latest = portfolioData.experience[0];
+        return `My professional background includes being a ${latest.role} at ${latest.company} (${latest.period}), leading WooCommerce development at uBreakWeFix, and several years of high-end Full Stack Freelancing. I've worked across Denmark and globally!`;
     }
 
-    // Check Skills
+    // Logic for Skills
     if (keywords.skills.some(k => q.includes(k))) {
-        return `I'm proficient across the stack: ${portfolioData.skills.frontend.slice(0, 3).join(", ")} for web, Flutter for mobile, and Blender/Python for 3D tools. I love pushing the boundaries of what's possible with code!`;
+        return `I'm highly proficient in ${portfolioData.skills.frontend.join(", ")} for web, plus ${portfolioData.skills.mobile.join(", ")} for mobile devices. I also have deep expertise in ${portfolioData.skills.creative.join(", ")}. Basically, I can handle everything from design to complex logic!`;
     }
 
-    // Check Contact
+    // Logic for Contact
     if (keywords.contact.some(k => q.includes(k))) {
-        return `You can reach me directly via Discord (${portfolioData.socials.discord}), Email (${portfolioData.bio.email}), or LinkedIn. I'm always open to discussing new projects or scaled engineering challenges!`;
+        return `Let's build something together! You can reach me at ${portfolioData.bio.email}, find me on Discord (${portfolioData.socials.discord}), or check my Instagram for my creative photography work. All links are in the Contact section!`;
     }
 
-    // Interactive response for specific project
-    if (q.includes("deenpath")) return "DeenPath is a premium Islamic companion app I built using Next.js. It focuses on high-end UI/UX and performance.";
-    if (q.includes("airplate")) return "At AirPlate, I developed advanced drone tracking systems using Flutter and Direct Remote ID tech.";
-    if (q.includes("cityforge")) return "CityForge is a Blender add-on I created for procedural city generation. It uses Geometry Nodes and Python.";
-
-    // Default Greeting or fallback
+    // Fallback/Greeting
     if (q.includes("hi") || q.includes("hello") || q.includes("hey")) {
-        return `Hello! I'm Abd's logical representative. I can tell you all about his projects, technical expertise, or career history. What would you like to explore first?`;
+        return `Hello! I'm your gateway to Abd Alrhman's professional world. Ask me about his drone projects, his Next.js expertise, or his unique design philosophy!`;
     }
 
-    return `I'm not exactly sure what you mean, but I can certainly tell you about Abd's work at AirPlate, his custom Blender tools like CityForge, or his skills in Next.js and Flutter! What's on your mind?`;
+    return `I'm optimized to tell you everything about Abd's career—from his degree at UCL to his engineering work at AirPlate. What specific part of his experience or skills would you like to know more about?`;
 };

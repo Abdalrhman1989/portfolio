@@ -65,7 +65,7 @@ npm run dev
 ## 👨‍💻 Author
 
 **Abd Alrhman Talaat Alshaar Dit Darra**
-- 🌍 [Portfolio](https://portfolio-abdal-2026.vercel.app)
+- 🌍 [Portfolio](https://abdalrhmanaldarra.com)
 - 💼 [LinkedIn](https://linkedin.com/in/abd-al-rhman-aldarra-8a24bb18b)
 - 📧 [Email](mailto:abdalrhmantalat@gmail.com)
 
