@@ -314,6 +314,49 @@ export default function HiringPage() {
                 </div>
             </section>
 
+            {/* Featured Showcase Project: HR-ON Serverless Integration Engine */}
+            <section className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-emerald-500/10 via-primary/5 to-transparent border border-emerald-500/30 shadow-md mb-10 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono text-[11px] font-bold border border-emerald-500/40">
+                                Targeted Engineering Proof-of-Concept
+                            </span>
+                            <span className="text-xs font-mono text-muted-foreground">
+                                Node.js 20 • TypeScript • AWS Serverless • PostgreSQL
+                            </span>
+                        </div>
+                        <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
+                            HR-ON Serverless Event Ingestion & EU Pay Transparency Engine
+                        </h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-2xl leading-relaxed">
+                            Engineered specifically to demonstrate production backend and cloud architecture for HR-ON. Features HMAC webhook security, SQS batch worker with partial failure handling, relational PostgreSQL schema, and automated EU Directive 2023/970 compliance audits.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
+                        <Link
+                            href="/case-studies/hron-integration"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs shadow-md transition-all hover:scale-105"
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            <span>Launch Live Simulator</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                        <a
+                            href="https://github.com/Abdalrhman1989/portfolio/tree/main/projects/hr-on-integration-engine"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card hover:bg-muted text-foreground border border-border font-bold text-xs transition-colors shadow-sm"
+                        >
+                            <Code2 className="w-4 h-4 text-primary" />
+                            <span>Inspect Source Code (GitHub)</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
             {/* Core Competency & Stack Matrix */}
             <section className="rounded-2xl p-6 sm:p-8 bg-card border border-border/80 shadow-sm mb-10">
                 <h2 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2 mb-2">

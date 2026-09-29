@@ -1,0 +1,40 @@
+{
+  "name": "hr-on-integration-engine",
+  "version": "1.0.0",
+  "description": "Production-grade Node.js & TypeScript Serverless Event Ingestion Engine for HR-ON with AWS Lambda, SQS, PostgreSQL, and EU Pay Transparency Audit Analytics.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "lint": "eslint src/ --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "serverless",
+    "aws-lambda",
+    "sqs",
+    "postgresql",
+    "graphql",
+    "hr-tech",
+    "pay-transparency",
+    "hron"
+  ],
+  "author": "Abd Alrhman Talaat Alshaar Dit Darra <abdalrhmanaldarra@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.658.0",
+    "graphql": "^16.9.0",
+    "pg": "^8.13.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^20.16.5",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
+  }
+}
