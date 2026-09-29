@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { User, MapPin, Code2, Github, Cpu, Briefcase, ExternalLink, Mail, Phone, Rocket, Zap, Heart } from "lucide-react";
+import { User, MapPin, Code2, Github, Cpu, Briefcase, ExternalLink, Mail, Phone, Rocket, Zap, Heart, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useVideoModal } from "./VideoModalContext";
 
 const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
     <motion.div
@@ -18,6 +19,8 @@ const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNo
 );
 
 export default function AboutGrid() {
+    const { openVideoModal } = useVideoModal();
+
     return (
         <section id="about" className="py-24 bg-background relative overflow-hidden">
             <div className="container mx-auto px-6 max-w-7xl">
@@ -40,8 +43,16 @@ export default function AboutGrid() {
                             fill
                             className="object-cover transition-transform duration-700 group-hover/img:scale-110"
                         />
-                        <div className="absolute bottom-6 left-6 z-20">
+                        <div className="absolute bottom-6 left-6 z-20 flex flex-wrap gap-2 items-center">
                             <span className="text-xs font-black uppercase tracking-widest text-primary bg-primary/20 px-3 py-1 rounded-full backdrop-blur-md">Professional Engineer</span>
+                            <button
+                                onClick={() => openVideoModal("resume")}
+                                className="text-xs font-bold uppercase tracking-wider text-white bg-black/75 hover:bg-primary hover:text-primary-foreground px-3 py-1 rounded-full backdrop-blur-md border border-white/20 flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"
+                                title="Play Video Resume"
+                            >
+                                <Play className="w-3 h-3 fill-current" />
+                                <span>Video CV</span>
+                            </button>
                         </div>
                     </BentoCard>
 

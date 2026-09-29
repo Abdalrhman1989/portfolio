@@ -1,15 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Play, FileText } from "lucide-react";
+import { useVideoModal } from "./VideoModalContext";
+import { useCvModal } from "./CvModalContext";
 
 // Chronological Order: Most Recent -> Oldest based on user data
-// AirPlate: 06/2024 - 09/2024 (Most recent specific job)
-// Freelance: 2021 - Present (Current ongoing)
-// IWCS: 01/2020 - 04/2021
-// Ubreak Wefix: 07/2018 - 01/2020
-
 const experiences = [
+    {
+        role: "Full-Stack Developer",
+        company: "Repairo.dk",
+        period: "01/2026 - 10/2026",
+        description: "Engineered a comprehensive digital repair-service platform, customer booking flows, status tracking, and AI-assisted workflows.",
+    },
     {
         role: "Mobile App Developer",
         company: "AirPlate",
@@ -37,6 +40,9 @@ const experiences = [
 ];
 
 export default function Experience() {
+    const { openVideoModal } = useVideoModal();
+    const { openCvModal } = useCvModal();
+
     return (
         <section id="experience" className="py-24 bg-background relative">
             {/* Decorative vertical line */}
@@ -50,6 +56,23 @@ export default function Experience() {
                     <p className="text-muted-foreground max-w-2xl mx-auto">
                         My professional journey in web development and design.
                     </p>
+                    <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                        <button
+                            onClick={() => openVideoModal("resume")}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-xs transition-all shadow-sm shadow-primary/10 cursor-pointer group"
+                        >
+                            <Play className="w-3.5 h-3.5 fill-current group-hover:scale-110 transition-transform" />
+                            <span>Watch 50s Motion Video Resume</span>
+                        </button>
+
+                        <button
+                            onClick={() => openCvModal()}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/80 hover:bg-muted dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-border text-foreground font-semibold text-xs transition-all shadow-sm cursor-pointer group"
+                        >
+                            <FileText className="w-3.5 h-3.5 text-primary group-hover:scale-110 transition-transform" />
+                            <span>Download CV (EN • DA • AR)</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div className="max-w-5xl mx-auto space-y-12 md:space-y-0 relative">

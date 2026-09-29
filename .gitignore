@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch / temp directories
+/tmp/
+/tmp_pdf_extract/
+/tmp_pdf_render/
+/artifacts/
+/output/
+/*.mp4
+/*.pdf
+make_*_submission.py

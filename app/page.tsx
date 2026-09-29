@@ -10,6 +10,7 @@ import SkillsMarquee from "@/components/SkillsMarquee";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import Certifications from "@/components/Certifications";
+import VideoShowcase from "@/components/VideoShowcase";
 import Projects from "@/components/Projects";
 import Game from "@/components/Game";
 import Game2 from "@/components/Game2";
@@ -33,6 +34,7 @@ export default function Home() {
         <Experience />
         <Education />
         <Certifications />
+        <VideoShowcase />
         <Projects />
         <Game />
         <Game2 />

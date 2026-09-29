@@ -1,55 +1,59 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { MeshDistortMaterial, Sphere, Float, MeshWobbleMaterial, GradientTexture } from "@react-three/drei";
-import { Suspense, useRef } from "react";
-import * as THREE from "three";
-
-function FloatingOrb() {
-    return (
-        <Float speed={2} rotationIntensity={1} floatIntensity={1}>
-            <Sphere args={[1, 100, 100]} scale={1.8}>
-                <MeshDistortMaterial
-                    color="#4f46e5"
-                    attach="material"
-                    distort={0.4}
-                    speed={2}
-                    roughness={0}
-                    metalness={0.8}
-                >
-                    <GradientTexture
-                        stops={[0, 1]}
-                        colors={['#4f46e5', '#ec4899']}
-                        size={1024}
-                    />
-                </MeshDistortMaterial>
-            </Sphere>
-        </Float>
-    );
-}
-
-function SmallFloatingOrb({ position, color }: { position: [number, number, number], color: string }) {
-    return (
-        <Float speed={3} rotationIntensity={0.5} floatIntensity={2}>
-            <Sphere args={[0.3, 32, 32]} position={position}>
-                <MeshWobbleMaterial color={color} factor={0.6} speed={3} />
-            </Sphere>
-        </Float>
-    );
-}
+import { Canvas } from "@react-three/fiber";
+import { Sparkles, Stars } from "@react-three/drei";
+import { Suspense } from "react";
 
 export default function HeroScene() {
     return (
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-60 flex items-center justify-center overflow-hidden">
-            <div className="w-full h-full max-w-[1400px] max-h-[900px]">
-                <Canvas camera={{ position: [0, 0, 5], fov: 75 }} gl={{ antialias: true }} dpr={[1, 2]}>
-                    <ambientLight intensity={1} />
-                    <directionalLight position={[10, 10, 5]} intensity={2} />
-                    <pointLight position={[-10, -10, -5]} intensity={1} color="#4f46e5" />
+        <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full">
+                <Canvas
+                    camera={{ position: [0, 0, 6], fov: 60 }}
+                    gl={{ antialias: true, alpha: true }}
+                    dpr={[1, 1.5]}
+                >
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} intensity={1} color="#14b8a6" />
+                    <pointLight position={[-10, -10, -5]} intensity={0.8} color="#22d3ee" />
+                    
                     <Suspense fallback={null}>
-                        <FloatingOrb />
-                        <SmallFloatingOrb position={[2.5, 1.5, -1]} color="#ec4899" />
-                        <SmallFloatingOrb position={[-2.5, -1.5, 1]} color="#14b8a6" />
+                        {/* Deep Elegant Starfield - Clean & Non-Intrusive */}
+                        <Stars
+                            radius={50}
+                            depth={40}
+                            count={1200}
+                            factor={2.5}
+                            saturation={0}
+                            fade
+                            speed={0.4}
+                        />
+
+                        {/* Floating Cyan/Teal Luminous Micro-Particles */}
+                        <Sparkles
+                            count={50}
+                            scale={[14, 10, 8]}
+                            size={2.5}
+                            speed={0.25}
+                            color="#14b8a6"
+                            opacity={0.35}
+                        />
+                        <Sparkles
+                            count={35}
+                            scale={[12, 8, 6]}
+                            size={2}
+                            speed={0.2}
+                            color="#22d3ee"
+                            opacity={0.3}
+                        />
+                        <Sparkles
+                            count={25}
+                            scale={[8, 6, 4]}
+                            size={3}
+                            speed={0.35}
+                            color="#ffffff"
+                            opacity={0.45}
+                        />
                     </Suspense>
                 </Canvas>
             </div>

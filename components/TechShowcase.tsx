@@ -1,64 +1,112 @@
 "use client";
 
 import { motion } from "framer-motion";
-import TechCloud3D from "./TechCloud3D";
-import { Cpu, Zap, Layers, Rocket, Code2, Globe } from "lucide-react";
+import TechEcosystem from "./TechEcosystem";
+import { Smartphone, Globe, Layers, Server, Code2, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function TechShowcase() {
     return (
-        <section className="py-32 bg-background relative overflow-hidden">
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col lg:flex-row gap-20 items-center">
-                    {/* Left: Text Content */}
+        <section id="tech-stack" className="py-28 bg-background dark:bg-[#07080b] relative overflow-hidden border-t border-border dark:border-white/[0.08]">
+            {/* Ambient Background Lighting */}
+            <div className="absolute top-1/3 left-10 w-[500px] h-[400px] bg-primary/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+            <div className="absolute bottom-10 right-10 w-[450px] h-[350px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+
+            <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+                    {/* Left: Text & Key Pillars */}
                     <div className="w-full lg:w-5/12 relative">
-                        {/* Decorative Background Element */}
-                        <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -z-10" />
-                        
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
+                            initial={{ opacity: 0, x: -25 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: 0.6 }}
                         >
-                            <span className="text-primary font-black uppercase tracking-[0.4em] text-[10px] block mb-6 px-4 py-1.5 bg-primary/5 border border-primary/20 w-fit rounded-full italic">The Technical Frontier</span>
-                            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-10 italic leading-[0.9]">
-                                Modern <br /><span className="text-primary not-italic">Tech</span> Stack
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold mb-6 backdrop-blur-md">
+                                <Sparkles className="w-3.5 h-3.5" />
+                                <span className="uppercase tracking-widest text-[11px]">The Technical Frontier</span>
+                            </div>
+
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-foreground dark:text-white leading-[1.05] mb-6">
+                                Modern <br />
+                                <span className="bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 dark:from-teal-400 dark:via-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                                    Tech Stack
+                                </span>
                             </h2>
-                            <p className="text-muted-foreground text-xl mb-12 leading-relaxed font-medium max-w-lg italic">
-                                I leverage a cutting-edge selection of technologies to build high-performance, scalable, and visually stunning digital products.
+
+                            <p className="text-muted-foreground dark:text-neutral-300 text-sm sm:text-base leading-relaxed mb-8 font-normal">
+                                A battle-tested engineering stack refined across <strong className="text-foreground dark:text-white font-semibold">28+ production projects</strong>. From high-performance mobile apps on the App Store to scalable enterprise backends and interactive 3D WebGL experiences.
                             </p>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-12">
+                            {/* 4 Core Pillars */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
                                 {[
-                                    { name: "Next.js 15", cat: "Framework", color: "primary", icon: <Code2 className="w-5 h-5" /> },
-                                    { name: "Three.js", cat: "3D Rendering", color: "blue-500", icon: <Layers className="w-5 h-5" /> },
-                                    { name: "Framer Motion", cat: "Animations", color: "pink-500", icon: <Zap className="w-5 h-5" /> },
-                                    { name: "Node.js", cat: "Backend", color: "green-500", icon: <Cpu className="w-5 h-5" /> }
-                                ].map((item, idx) => (
-                                    <div key={idx} className="p-6 bg-card/40 border border-border/50 rounded-3xl flex items-center gap-4 group hover:border-primary/50 transition-all hover:bg-card/60">
-                                        <div className={`p-3 bg-${item.color}/10 rounded-2xl text-${item.color} group-hover:scale-110 transition-transform`}>
-                                            {item.icon}
+                                    {
+                                        name: "Next.js 16 & React",
+                                        cat: "Full-Stack Web",
+                                        icon: Globe,
+                                        color: "text-emerald-500 dark:text-emerald-400",
+                                        bg: "bg-emerald-500/10 border-emerald-500/20"
+                                    },
+                                    {
+                                        name: "Flutter & React Native",
+                                        cat: "Mobile Engineering",
+                                        icon: Smartphone,
+                                        color: "text-sky-500 dark:text-sky-400",
+                                        bg: "bg-sky-500/10 border-sky-500/20"
+                                    },
+                                    {
+                                        name: "Node.js & Postgres",
+                                        cat: "Cloud & Database",
+                                        icon: Server,
+                                        color: "text-indigo-400",
+                                        bg: "bg-indigo-500/10 border-indigo-500/20"
+                                    },
+                                    {
+                                        name: "Three.js & WebGL",
+                                        cat: "Interactive 3D",
+                                        icon: Layers,
+                                        color: "text-amber-400",
+                                        bg: "bg-amber-500/10 border-amber-500/20"
+                                    }
+                                ].map((item, idx) => {
+                                    const IconComp = item.icon;
+                                    return (
+                                        <div
+                                            key={idx}
+                                            className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.07] flex items-center gap-3 transition-colors"
+                                        >
+                                            <div className={`p-2.5 rounded-xl border ${item.bg} ${item.color} shrink-0`}>
+                                                <IconComp className="w-5 h-5" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-white text-sm tracking-tight">
+                                                    {item.name}
+                                                </h4>
+                                                <p className="text-[11px] text-neutral-400 font-mono">
+                                                    {item.cat}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4 className="font-bold text-lg leading-tight uppercase tracking-tighter italic">{item.name}</h4>
-                                            <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">{item.cat}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
+                            </div>
+
+                            <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                                <CheckCircle2 className="w-4 h-4 text-primary" />
+                                <span>Zero placeholders • 100% authentic production code</span>
                             </div>
                         </motion.div>
                     </div>
 
-                    {/* Right: 3D Visualization */}
-                    <div className="w-full lg:w-7/12 min-h-[600px] relative">
+                    {/* Right: Interactive Tech Architecture Hub */}
+                    <div className="w-full lg:w-7/12">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                            className="w-full h-full glass-container rounded-[40px] border border-border/50 overflow-hidden shadow-2xl relative bg-[#050505]/40 backdrop-blur-3xl"
+                            transition={{ duration: 0.7, delay: 0.15 }}
                         >
-                            <TechCloud3D />
+                            <TechEcosystem />
                         </motion.div>
                     </div>
                 </div>

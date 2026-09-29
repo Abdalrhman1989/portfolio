@@ -2,12 +2,23 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, Layers, Globe } from "lucide-react";
+import { ExternalLink, Github, Layers, Globe, Play, Film, ArrowRight, FileText } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image"; // Added Import
+import { useVideoModal } from "./VideoModalContext";
 
 // Real Project Data from User
 const projects = [
+    {
+        id: 0,
+        title: "REPAIRO",
+        category: "Web App",
+        image: "/assets/projects/repairo.png",
+        description: "Premium repair-service platform with booking, admin case management, customer status tracking, Stripe payments, localization, and AI-assisted support.",
+        tech: ["Next.js", "TypeScript", "Prisma", "Stripe", "AI SDK"],
+        links: { demo: "https://www.repairo.dk", github: "#" },
+        badge: "Flagship"
+    },
     {
         id: 1,
         title: "DeenPath",
@@ -26,7 +37,8 @@ const projects = [
         description: "Official website for a creative tech agency specializing in design, development, and film production.",
         tech: ["Next.js", "Framer Motion", "GSAP"],
         links: { demo: "https://servixerspace.com", github: "https://github.com/Abdalrhman1989/servixerspace.git" },
-        badge: "Live"
+        badge: "Live",
+        hasShowreel: true
     },
     {
         id: 3,
@@ -36,23 +48,25 @@ const projects = [
         description: "Mobile application for drone tracking and monitoring data using Network/Direct Remote ID.",
         tech: ["Flutter", "Dart", "Firebase", "Maps API"],
         links: { demo: "https://apps.apple.com/dk/app/airplate/id6670435015?l=da", github: "#" },
-        badge: "App Store"
+        badge: "App Store",
+        hasShowreel: true
     },
     {
         id: 4,
-        title: "Elevate OS",
-        category: "Marketing",
+        title: "Elevate OS — Enterprise Suite",
+        category: "Agency",
         image: "/assets/projects/elevateos.png",
-        description: "A high-end marketing agency landing page for 'Elevate,' featuring personalized growth tools for businesses.",
-        tech: ["React", "Custom CSS", "Performance Optimized"],
-        links: { demo: "https://elevate-os-v1.vercel.app", github: "#" },
-        badge: "Corporate"
+        description: "A premier creative agency & enterprise OS: Public Website, Admin Command Center, Partner Portal, Client Workspace, and Headless CMS.",
+        tech: ["Next.js 16", "Admin Portal", "Partner Hub", "Client Workspace", "Headless CMS"],
+        links: { demo: "https://elevatewithus.co/en", github: "#" },
+        badge: "Flagship Case Study",
+        caseStudy: "/case-studies/elevate"
     },
     {
         id: 5,
         title: "ExploreEase (Tawny)",
         category: "Booking",
-        image: "/assets/projects/exploreease.png",
+        image: "/assets/projects/exploreease-real.png",
         description: "Smart travel and hotel booking platform with interactive map integration and seamless itinerary management.",
         tech: ["Next.js", "Firebase", "Tailwind"],
         links: { demo: "https://explore-ease-tawny.vercel.app", github: "https://github.com/Abdalrhman1989/ExploreEase.git" },
@@ -66,7 +80,8 @@ const projects = [
         description: "A professional device repair service platform for phones, tablets, and computers across Denmark.",
         tech: ["React", "Tailwind", "Node.js"],
         links: { demo: "https://ubreakwefix.vercel.app", github: "#" },
-        badge: "Commercial"
+        badge: "Commercial",
+        hasShowreel: true
     },
     {
         id: 7,
@@ -90,13 +105,13 @@ const projects = [
     },
     {
         id: 9,
-        title: "Vavion",
-        category: "3D Tools",
-        image: "/assets/projects/vavion.png",
-        description: "A 3D aviation logistics visualizer featuring real-time flight tracking and aircraft fleet management.",
-        tech: ["Three.js", "React Three Fiber", "Logistics API"],
-        links: { demo: "https://vavion.vercel.app", github: "#" },
-        badge: "New"
+        title: "Vavion Creative",
+        category: "Agency",
+        image: "/assets/projects/vavion-real.png",
+        description: "Full-service digital creative agency platform featuring immersive dark UI, bilingual Arabic/English experience, and brand showcase.",
+        tech: ["React", "Vite", "Tailwind CSS", "PWA"],
+        links: { demo: "#", github: "#" },
+        badge: "Creative"
     },
     {
         id: 10,
@@ -122,7 +137,7 @@ const projects = [
         id: 12,
         title: "Zenith Apex Overdrive",
         category: "Game",
-        image: null,
+        image: "/assets/projects/zenith-apex.png",
         description: "High-octane futuristic racing experience featuring cutting-edge graphics and intense competitive play.",
         tech: ["Next.js", "WebGL", "Framer Motion"],
         links: { demo: "https://zenith-apex-overdrive.vercel.app", github: "#" },
@@ -132,7 +147,7 @@ const projects = [
         id: 13,
         title: "Triply",
         category: "Booking",
-        image: null,
+        image: "/assets/projects/triply.png",
         description: "Smart travel itinerary planner with integrated booking features and interactive destination guides.",
         tech: ["Next.js", "Sanity.io", "Tailwind"],
         links: { demo: "https://triply-one-nu.vercel.app", github: "#" },
@@ -182,7 +197,7 @@ const projects = [
         id: 18,
         title: "Nexus Infinity Elite",
         category: "Dashboards",
-        image: null,
+        image: "/assets/projects/nexus-infinity.png",
         description: "Advanced infrastructure monitoring system with predictive analytics and high-density data visualization.",
         tech: ["Next.js", "Advanced Charts", "Real-time API"],
         links: { demo: "https://nexus-infinity-elite.vercel.app", github: "#" },
@@ -202,7 +217,7 @@ const projects = [
         id: 20,
         title: "Neon Drift",
         category: "Game",
-        image: null,
+        image: "/assets/projects/neondrift.png",
         description: "Retro-futuristic driving experience featuring synthwave visuals and responsive 3D environments.",
         tech: ["Three.js", "React", "Shaders"],
         links: { demo: "https://neon-drift-pi.vercel.app", github: "#" },
@@ -212,7 +227,7 @@ const projects = [
         id: 21,
         title: "Neon Survivors",
         category: "Game",
-        image: null,
+        image: "/assets/projects/neonsurvivors.png",
         description: "Elite survival game set in a neon-drenched dystopia. High difficulty and addictive retro mechanics.",
         tech: ["Vite", "React", "Fast Canvas"],
         links: { demo: "https://neon-survivors-nine.vercel.app", github: "#" },
@@ -232,17 +247,17 @@ const projects = [
         id: 23,
         title: "Trix Card Game",
         category: "Game",
-        image: null,
+        image: "/assets/projects/trix.png",
         description: "Digital implementation of the popular Middle Eastern card game Trix, built with robust game logic.",
         tech: ["TypeScript", "State Management", "Game Logic"],
-        links: { demo: "#", github: "https://github.com/Abdalrhman1989/Trix-Card-Game" },
+        links: { demo: "https://trix-card-game.vercel.app", github: "https://github.com/Abdalrhman1989/Trix-Card-Game" },
         badge: "Logic"
     },
     {
         id: 24,
         title: "RESTAVO",
         category: "Services",
-        image: null,
+        image: "/assets/projects/restavo.png",
         description: "Complete restaurant operating system for table booking, order tracking, and inventory management.",
         tech: ["TypeScript", "Next.js", "Prisma"],
         links: { demo: "#", github: "https://github.com/Abdalrhman1989/RESTAVO" },
@@ -252,7 +267,7 @@ const projects = [
         id: 25,
         title: "CityForge",
         category: "3D Tools",
-        image: null,
+        image: "/assets/projects/cityforge.png",
         description: "Blender add-on for procedural city generation, creating complex road networks and buildings with ease.",
         tech: ["Python", "Blender API", "Geometry Nodes"],
         links: { demo: "#", github: "https://github.com/Abdalrhman1989/-CityForge" },
@@ -262,7 +277,7 @@ const projects = [
         id: 26,
         title: "Memory Sculptor",
         category: "AI",
-        image: null,
+        image: "/assets/projects/memory-sculptor.png",
         description: "Data-driven memory visualization tool that transforms cognitive training data into abstract 3D forms.",
         tech: ["Python", "AI", "Matplotlib"],
         links: { demo: "#", github: "https://github.com/Abdalrhman1989/memory-sculptor" },
@@ -272,22 +287,26 @@ const projects = [
         id: 27,
         title: "Personal Portfolio",
         category: "Web App",
-        image: "/assets/project-portfolio.png",
+        image: "/assets/project-portfolio-real.png",
         description: "The very site you're exploring! A premium showcase of work using advanced web technologies.",
         tech: ["Next.js", "Framer Motion", "Tailwind CSS"],
         links: { demo: "/", github: "https://github.com/Abdalrhman1989/portfolio" },
-        badge: "Current"
+        badge: "Current",
+        hasShowreel: true
     }
 ];
 
-const filters = ["All", "Web App", "Agency", "Mobile", "Marketing", "Booking", "Services", "Game", "Blockchain", "Social", "AI", "Dashboards", "3D Tools", "Portfolio"];
+const filters = ["All", "Case Studies", "Web App", "Agency", "Mobile", "Marketing", "Booking", "Services", "Game", "Blockchain", "Social", "AI", "Dashboards", "3D Tools", "Portfolio"];
 
 export default function Projects() {
+    const { openVideoModal } = useVideoModal();
     const [filter, setFilter] = useState("All");
 
-    const filteredProjects = projects.filter(
-        (project) => filter === "All" || project.category === filter
-    );
+    const filteredProjects = projects.filter((project) => {
+        if (filter === "All") return true;
+        if (filter === "Case Studies") return Boolean((project as any).caseStudy);
+        return project.category === filter;
+    });
 
     return (
         <section id="projects" className="py-24 bg-card/30 relative overflow-hidden">
@@ -338,7 +357,27 @@ export default function Projects() {
                             >
                                 {/* Image Placeholder */}
                                 <div className="relative h-48 w-full bg-muted overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center gap-4">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center gap-3">
+                                        {(project as any).caseStudy && (
+                                            <Link
+                                                href={(project as any).caseStudy}
+                                                className="px-3.5 py-2 bg-primary text-primary-foreground rounded-full hover:scale-110 transition-transform shadow-lg shadow-primary/30 flex items-center gap-1.5 text-xs font-bold"
+                                                title="Read Deep-Dive Case Study"
+                                            >
+                                                <FileText className="w-4 h-4" />
+                                                <span>Case Study</span>
+                                            </Link>
+                                        )}
+                                        {project.hasShowreel && (
+                                            <button
+                                                onClick={() => openVideoModal("portfolio")}
+                                                className="p-3 bg-primary text-primary-foreground rounded-full hover:scale-110 transition-transform shadow-lg shadow-primary/30 cursor-pointer"
+                                                title="Watch in Video Showreel"
+                                                aria-label="Watch in Video Showreel"
+                                            >
+                                                <Play className="w-5 h-5 fill-current translate-x-0.5" />
+                                            </button>
+                                        )}
                                         {project.links.github !== "#" && (
                                             <Link href={project.links.github} target="_blank" className="p-3 bg-background rounded-full hover:text-primary transition-colors hover:scale-110" title="View Code">
                                                 <Github className="w-5 h-5" />
@@ -351,12 +390,25 @@ export default function Projects() {
                                         )}
                                     </div>
 
+                                    {project.hasShowreel && (
+                                        <button
+                                            onClick={() => openVideoModal("portfolio")}
+                                            className="absolute top-4 left-4 z-20 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground text-[10px] font-bold flex items-center gap-1.5 shadow-lg transition-all cursor-pointer group/reel"
+                                            title="Watch in Video Showreel"
+                                        >
+                                            <Play className="w-2.5 h-2.5 fill-current group-hover/reel:scale-110 transition-transform" />
+                                            <span>Watch Reel</span>
+                                        </button>
+                                    )}
+
 
                                     {project.image ? (
                                         <Image
                                             src={project.image}
                                             alt={project.title}
                                             fill
+                                            loading="eager"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             className="object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
                                     ) : (
@@ -389,6 +441,21 @@ export default function Projects() {
                                             </span>
                                         ))}
                                     </div>
+
+                                    {(project as any).caseStudy && (
+                                        <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between">
+                                            <Link
+                                                href={(project as any).caseStudy}
+                                                className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:text-primary/80 transition-colors group/cs"
+                                            >
+                                                <span>Explore Enterprise Case Study</span>
+                                                <ArrowRight className="w-3.5 h-3.5 group-hover/cs:translate-x-1 transition-transform" />
+                                            </Link>
+                                            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                                                5 Systems
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         ))}

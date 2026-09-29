@@ -4,23 +4,24 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Background3D from "@/components/Background3D";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import SupportChat from "@/components/SupportChat";
+import { VideoProvider } from "@/components/VideoModalContext";
+import { CvProvider } from "@/components/CvModalContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Abd Alrhman | Software Developer & Full Stack Mobile App Developer",
-  description: "Portfolio of Abd Alrhman Talaat Alshaar Dit Darra, a Software Developer & Full Stack Mobile App Developer based in Odense, Denmark.",
-  metadataBase: new URL("https://abdalrhmanaldarra.com"),
+  title: "Abd Alrhman | Full-Stack Developer & Mobile Engineer",
+  description: "Portfolio of Abd Alrhman Talaat Alshaar Dit Darra, a Full-Stack Developer & Mobile Engineer based in Odense, Denmark.",
+  metadataBase: new URL("https://abdalrhmandarra.com"),
   manifest: "/manifest.json",
   icons: {
     icon: "/assets/chat-avatar.png",
     apple: "/assets/chat-avatar.png",
   },
-  themeColor: "#ef4444",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ef4444",
+  themeColor: "#14b8a6",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -42,15 +43,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={cn(inter.className, "bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary relative")}>
-        <ScrollProgress />
-        <Background3D />
-        <CustomCursor />
-        <Navbar />
-        {children}
-        <SupportChat />
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <VideoProvider>
+            <CvProvider>
+              <ScrollProgress />
+              <Background3D />
+              <Navbar />
+              {children}
+              <SupportChat />
+              <Footer />
+            </CvProvider>
+          </VideoProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

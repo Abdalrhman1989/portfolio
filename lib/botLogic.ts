@@ -5,6 +5,9 @@ export const portfolioData = {
         fullName: "Abd Alrhman Talaat Alshaar Dit Darra",
         role: "Software Developer & Full Stack Mobile App Developer",
         email: "abdalrhmanaldarra@gmail.com",
+        phone: "+45 42 22 31 10",
+        whatsapp: "004542223110",
+        whatsappUrl: "https://wa.me/4542223110",
         location: "Odense, Denmark 🇩🇰",
         born: 1989,
         education: "Bachelor's degree in Web Development & Multimedia Design from UCL University College (Class of 2024)",
@@ -47,6 +50,8 @@ export const portfolioData = {
         }
     ],
     projects: [
+        { name: "Elevate OS — Enterprise Suite", tech: "Next.js 16/Admin/Partner/Client/CMS", desc: "Enterprise Agency Suite covering 5 distinct subsystems: public 3D brand portal, executive admin console, partner affiliate hub, client workspace, and headless CMS with bilingual Arabic/English." },
+        { name: "REPAIRO", tech: "Next.js/Prisma/AI", desc: "Premium electronics repair platform with booking, admin repair management, payments, localization, and AI-assisted support." },
         { name: "DeenPath", tech: "Next.js", desc: "Premium Islamic companion app focusing on high-end user experience." },
         { name: "ServixerSpace", tech: "Framer Motion", desc: "Agency portfolio showcasing advanced animations and interaction design." },
         { name: "AirPlate App", tech: "Flutter", desc: "Drone tracking system available on the App Store." },
@@ -66,7 +71,10 @@ export const portfolioData = {
         { q: "International Work", a: "Yes, I work globally from Odense, Denmark." }
     ],
     socials: {
-        discord: "abdalrhmanaldarra",
+        whatsapp: "+45 42 22 31 10",
+        whatsappNumber: "004542223110",
+        whatsappUrl: "https://wa.me/4542223110",
+        discord: "abdalrhmandarra",
         github: "Abdalrhman1989",
         linkedin: "abd-al-rhman-aldarra-8a24bb18b",
         instagram: "abdalrhman.darra",
@@ -75,17 +83,24 @@ export const portfolioData = {
 };
 
 const keywords = {
-    projects: ["project", "work", "build", "portfolio", "done", "made", "deenpath", "servixer", "airplate", "cityforge", "game", "runner", "memory"],
+    projects: ["project", "work", "build", "portfolio", "done", "made", "elevate", "studycase", "case study", "repairo", "deenpath", "servixer", "airplate", "cityforge", "game", "runner", "memory"],
     experience: ["experience", "job", "career", "history", "work", "resume", "cv", "airplate", "iwcs", "ubreak", "freelance"],
     skills: ["skill", "tech", "use", "stack", "program", "code", "language", "react", "next", "flutter", "blender", "python", "drone", "animation"],
     personal: ["who", "name", "old", "age", "born", "about", "location", "denmark", "odense", "education", "degree", "university", "ucl", "philosophy", "sculptor"],
-    contact: ["hire", "contact", "email", "mail", "discord", "social", "message", "linkedin", "phone", "instagram"]
+    contact: ["hire", "contact", "email", "mail", "discord", "social", "message", "linkedin", "phone", "instagram", "whatsapp", "call", "sms", "number", "tel"]
 };
 
 export const findBestResponse = (query: string): string => {
     const q = query.toLowerCase();
     
     // Check specific project triggers
+    if (q.includes("video") || q.includes("showreel") || q.includes("reel") || q.includes("demo video") || q.includes("watch")) {
+        return "I have two full-HD motion video showcases right here on this site: 1) The Portfolio Showreel (51s) highlighting Servixer Space, uBreak WeFix, and 3D web craft; and 2) The Motion Video Resume (50s) detailing my career, degrees, and tech stack. Check out the 'Cinematic Showreels' section or click 'Watch Showreel' in the Hero to play them!";
+    }
+    if (q.includes("elevate") || q.includes("studycase") || q.includes("case study") || q.includes("case-study")) {
+        return "You can explore the comprehensive Elevate OS Enterprise Case Study at /case-studies/elevate! It breaks down all 5 interconnected systems: 1) The 3D Public Website (elevatewithus.co), 2) Multi-Role Admin Command Center with SAR revenue metrics, 3) Partner & Affiliate Portal with commission tracking, 4) Client Collaboration Workspace with video review & invoicing, and 5) Headless CMS with real-time EN/AR bilingual live preview.";
+    }
+    if (q.includes("repairo")) return "REPAIRO is my current flagship product: a premium repair-service platform built with Next.js, TypeScript, Prisma, Stripe, localization, admin repair workflows, customer status tracking, and AI-assisted support.";
     if (q.includes("deenpath")) return "DeenPath is a premium Islamic companion app I built using Next.js. It focuses on high-end UI/UX and religious utility.";
     if (q.includes("airplate")) return "At AirPlate, I developed advanced drone tracking systems using Flutter and Direct Remote ID tech. It's built for precision and safety.";
     if (q.includes("cityforge")) return "CityForge is my custom Blender add-on for procedural city generation, powered by Geometry Nodes and Python.";
@@ -120,9 +135,12 @@ export const findBestResponse = (query: string): string => {
         return `I'm highly proficient in ${portfolioData.skills.frontend.join(", ")} for web, plus ${portfolioData.skills.mobile.join(", ")} for mobile devices. I also have deep expertise in ${portfolioData.skills.creative.join(", ")}. Basically, I can handle everything from design to complex logic!`;
     }
 
-    // Logic for Contact
+    // Logic for Contact & WhatsApp
     if (keywords.contact.some(k => q.includes(k))) {
-        return `Let's build something together! You can reach me at ${portfolioData.bio.email}, find me on Discord (${portfolioData.socials.discord}), or check my Instagram for my creative photography work. All links are in the Contact section!`;
+        if (q.includes("whatsapp") || q.includes("phone") || q.includes("call") || q.includes("number")) {
+            return `You can message or call Abd directly on WhatsApp at +45 42 22 31 10 (004542223110), or click https://wa.me/4542223110 to chat instantly!`;
+        }
+        return `Let's build something together! You can message Abd on WhatsApp at +45 42 22 31 10 (004542223110), email him at ${portfolioData.bio.email}, or find him on LinkedIn. Direct WhatsApp link: https://wa.me/4542223110. All links are in the Contact section!`;
     }
 
     // Fallback/Greeting

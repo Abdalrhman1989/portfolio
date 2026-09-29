@@ -1,21 +1,40 @@
 @import 'tailwindcss';
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  /* Minimal Dark Theme Variables */
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  /* Crisp Light Theme Variables */
+  --background: #f8fafc;
+  --foreground: #0f172a;
   
   /* Primary Accent: Emerald/Teal */
-  --primary: #14b8a6; /* Emerald-500 equivalent */
+  --primary: #0d9488;
+  --primary-foreground: #ffffff;
+  
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  
+  --border: #e2e8f0;
+}
+
+.dark {
+  /* Sleek Dark Theme Variables */
+  --background: #07080b;
+  --foreground: #ededed;
+  
+  --primary: #14b8a6;
   --primary-foreground: #000000;
   
-  --muted: #262626;
-  --muted-foreground: #a3a3a3;
+  --muted: #1a1d26;
+  --muted-foreground: #94a3b8;
   
-  --card: #171717;
+  --card: #0e1017;
   --card-foreground: #ededed;
   
-  --border: #262626;
+  --border: #1e2330;
 }
 
 @theme {
@@ -39,9 +58,10 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Custom Scrollbar for a premium feel */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
