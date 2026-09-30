@@ -35,16 +35,18 @@ export default function AboutGrid() {
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                     {/* Image Card - NEW */}
-                    <BentoCard className="md:col-span-4 md:row-span-2 p-0 overflow-hidden relative group/img">
-                        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10 opacity-60" />
+                    <BentoCard className="md:col-span-4 md:row-span-2 min-h-[380px] sm:min-h-[440px] md:min-h-full aspect-[4/5] md:aspect-auto p-0 overflow-hidden relative group/img">
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent z-10 opacity-70 pointer-events-none" />
                         <Image
                             src="/assets/profile.jpg"
                             alt="Abd Alrhman Profile"
                             fill
-                            className="object-cover transition-transform duration-700 group-hover/img:scale-110"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            priority
+                            className="object-cover object-top transition-transform duration-700 group-hover/img:scale-105"
                         />
-                        <div className="absolute bottom-6 left-6 z-20 flex flex-wrap gap-2 items-center">
-                            <span className="text-xs font-black uppercase tracking-widest text-primary bg-primary/20 px-3 py-1 rounded-full backdrop-blur-md">Professional Engineer</span>
+                        <div className="absolute bottom-6 left-6 right-6 z-20 flex flex-wrap gap-2 items-center">
+                            <span className="text-xs font-black uppercase tracking-widest text-primary bg-primary/20 px-3 py-1 rounded-full backdrop-blur-md border border-primary/30">Professional Engineer</span>
                             <button
                                 onClick={() => openVideoModal("resume")}
                                 className="text-xs font-bold uppercase tracking-wider text-white bg-black/75 hover:bg-primary hover:text-primary-foreground px-3 py-1 rounded-full backdrop-blur-md border border-white/20 flex items-center gap-1.5 transition-all cursor-pointer shadow-lg"

@@ -49,6 +49,7 @@ interface SubsystemTab {
     techPoints: string[];
     liveActionUrl?: string;
     liveActionLabel?: string;
+    alternateImages?: { label: string; src: string; caption?: string }[];
 }
 
 const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
@@ -59,6 +60,10 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
         icon: Globe,
         tag: "Customer-Facing Portal",
         image: "/assets/projects/elevateos.png",
+        alternateImages: [
+            { label: "Elevate OS UI", src: "/assets/projects/elevateos.png", caption: "High-Fidelity Production UI" },
+            { label: "Elevate With Us Web", src: "/assets/projects/elevate_banner.png", caption: "Live Platform (elevatewithus.co)" }
+        ],
         badge: "Live at elevatewithus.co",
         overview:
             "A luxury corporate platform serving as the primary digital home for Elevate in Saudi Arabia (Jeddah & Riyadh). Built to capture high-value enterprise leads, showcase 4K commercial reels, and articulate 360-degree brand marketing across Vision 2030 initiatives.",
@@ -238,7 +243,11 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
 
 export default function ElevateCaseStudyPage() {
     const [activeTab, setActiveTab] = useState<SubsystemKey>("website");
+    const [selectedImages, setSelectedImages] = useState<Record<string, string>>({
+        website: "/assets/projects/elevateos.png"
+    });
     const currentSubsystem = SUBSYSTEMS[activeTab];
+    const currentImage = selectedImages[currentSubsystem.key] || currentSubsystem.image;
 
     return (
         <main className="min-h-screen bg-[#08090B] text-stone-100 selection:bg-[#FF8A00] selection:text-black font-sans relative overflow-hidden">
@@ -450,9 +459,36 @@ export default function ElevateCaseStudyPage() {
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                                 {/* Left: UI Visual (7 cols) */}
                                 <div className="lg:col-span-7 space-y-4">
+                                    {currentSubsystem.alternateImages && (
+                                        <div className="flex flex-wrap items-center justify-between gap-2 p-2 bg-white/[0.03] rounded-2xl border border-white/10">
+                                            <span className="text-[11px] font-mono font-bold text-stone-400 uppercase tracking-wider pl-2">
+                                                Visual Source:
+                                            </span>
+                                            <div className="flex gap-1.5">
+                                                {currentSubsystem.alternateImages.map((alt) => {
+                                                    const active = currentImage === alt.src;
+                                                    return (
+                                                        <button
+                                                            key={alt.src}
+                                                            onClick={() => setSelectedImages(prev => ({ ...prev, [currentSubsystem.key]: alt.src }))}
+                                                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                                                                active
+                                                                    ? "bg-[#FF8A00] text-black shadow-lg shadow-orange-500/20 font-black"
+                                                                    : "text-stone-300 hover:text-white bg-white/5 hover:bg-white/10"
+                                                            }`}
+                                                        >
+                                                            {alt.label}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-white/15 bg-black shadow-2xl group">
                                         <Image
-                                            src={currentSubsystem.image}
+                                            key={currentImage}
+                                            src={currentImage}
                                             alt={currentSubsystem.label}
                                             fill
                                             className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
@@ -460,7 +496,7 @@ export default function ElevateCaseStudyPage() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
                                         <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/90">
                                             <span className="font-mono bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-md border border-white/10">
-                                                High-Fidelity Production UI
+                                                {currentSubsystem.alternateImages?.find(a => a.src === currentImage)?.caption || "High-Fidelity Production UI"}
                                             </span>
                                             <span className="font-bold text-[#FF8A00] flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-md border border-white/10">
                                                 <CheckCircle2 className="w-3.5 h-3.5" /> Verified
