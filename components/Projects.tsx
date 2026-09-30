@@ -10,19 +10,6 @@ import { useVideoModal } from "./VideoModalContext";
 // Real Project Data from User
 const projects = [
     {
-        id: "hron-cloud",
-        title: "HR-ON Serverless Event & Compliance Engine",
-        category: "Cloud & APIs",
-        image: "/assets/projects/deenpath.png",
-        description: "Enterprise serverless event-driven architecture with HMAC webhook security, SQS batch resilience, PostgreSQL schema modeling, and automated EU Directive 2023/970 Pay Transparency analytics.",
-        tech: ["Node.js 20", "TypeScript", "AWS Lambda", "SQS", "PostgreSQL", "GraphQL"],
-        links: { 
-            demo: "/case-studies/hron-integration", 
-            github: "https://github.com/Abdalrhman1989/portfolio/tree/main/projects/hr-on-integration-engine" 
-        },
-        badge: "Serverless"
-    },
-    {
         id: 0,
         title: "REPAIRO",
         category: "Web App",

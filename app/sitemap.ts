@@ -24,12 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/case-studies/hron-integration`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.95,
-    },
-    {
       url: `${baseUrl}/studycase/elevate`,
       lastModified: now,
       changeFrequency: "monthly",
