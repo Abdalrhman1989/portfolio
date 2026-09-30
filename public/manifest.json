@@ -1,21 +1,50 @@
 {
-  "name": "Abd Alrhman Darra | Software Developer",
-  "short_name": "Abd Darra",
-  "description": "Premium Portfolio of Abd Alrhman Darra, Software Developer & Full Stack Mobile App Developer.",
+  "name": "Abd Alrhman Darra | Senior Software & Full-Stack Engineer",
+  "short_name": "Abd Alrhman",
+  "description": "Official Portfolio of Abd Alrhman Darra — Senior Full-Stack Developer, Mobile App Engineer, 3D & AI Systems Specialist.",
   "start_url": "/",
+  "id": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#ef4444",
+  "orientation": "portrait-primary",
+  "background_color": "#08090B",
+  "theme_color": "#14b8a6",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "portfolio",
+    "technology",
+    "productivity",
+    "developer tools"
+  ],
   "icons": [
     {
-      "src": "/assets/chat-avatar.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/assets/chat-avatar.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]

@@ -58,10 +58,11 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
         subLabel: "Brand Platform & 3D Visuals",
         icon: Globe,
         tag: "Customer-Facing Portal",
-        image: "/assets/projects/elevate_banner.png",
+        image: "/assets/projects/elevate_pro_showcase.png",
         alternateImages: [
-            { label: "Elevate Real Platform (Astronaut)", src: "/assets/projects/elevate_banner.png", caption: "Live Platform (elevatewithus.co) — Real 3D Astronaut & 360° Brand House" },
-            { label: "Live Space Orbit & Showreels", src: "/assets/projects/elevate_live_orbit.png", caption: "Live Platform — KSA Earth Orbit, Commercial Showreels & Navigation" }
+            { label: "Live Platform Showcase", src: "/assets/projects/elevate_pro_showcase.png", caption: "Live Platform (elevatewithus.co) — 3D Space Orbit, Commercial Video Hub & Real Astronaut" },
+            { label: "Full-Bleed Dark UI", src: "/assets/projects/elevate_dark_16_9_v2.png", caption: "Live Platform — KSA Earth Orbit, 4K Showreels & Bilingual Architecture" },
+            { label: "Client Case Studies", src: "/assets/projects/elevate_real_work.png", caption: "Live Platform — Nestlé Pure Life, Red Bull & Free Life Brand Activations" }
         ],
         badge: "Live at elevatewithus.co",
         overview:
@@ -243,7 +244,7 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
 export default function ElevateCaseStudyPage() {
     const [activeTab, setActiveTab] = useState<SubsystemKey>("website");
     const [selectedImages, setSelectedImages] = useState<Record<string, string>>({
-        website: "/assets/projects/elevate_banner.png"
+        website: "/assets/projects/elevate_pro_showcase.png"
     });
     const currentSubsystem = SUBSYSTEMS[activeTab];
     const currentImage = selectedImages[currentSubsystem.key] || currentSubsystem.image;

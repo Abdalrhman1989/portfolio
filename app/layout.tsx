@@ -9,6 +9,7 @@ import SupportChat from "@/components/SupportChat";
 import { VideoProvider } from "@/components/VideoModalContext";
 import { CvProvider } from "@/components/CvModalContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import PwaRegister from "@/components/PwaRegister";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -50,13 +51,19 @@ export const metadata: Metadata = {
   publisher: "Abd Alrhman Talaat Alshaar Dit Darra",
   manifest: "/manifest.json",
   icons: {
-    icon: "/assets/chat-avatar.png",
-    apple: "/assets/chat-avatar.png",
+    icon: [
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
-    title: "Abd Darra",
+    statusBarStyle: "black-translucent",
+    title: "Abd Alrhman",
   },
   alternates: {
     canonical: siteUrl,
@@ -207,6 +214,7 @@ export default function RootLayout({
       </head>
       <body className={cn(inter.className, "bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary relative")}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <PwaRegister />
           <VideoProvider>
             <CvProvider>
               <ScrollProgress />
