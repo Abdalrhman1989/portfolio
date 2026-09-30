@@ -58,10 +58,10 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
         subLabel: "Brand Platform & 3D Visuals",
         icon: Globe,
         tag: "Customer-Facing Portal",
-        image: "/assets/projects/elevateos.png",
+        image: "/assets/projects/elevate_banner.png",
         alternateImages: [
-            { label: "Elevate OS UI", src: "/assets/projects/elevateos.png", caption: "High-Fidelity Production UI" },
-            { label: "Elevate With Us Web", src: "/assets/projects/elevate_banner.png", caption: "Live Platform (elevatewithus.co)" }
+            { label: "Elevate Real Platform (Astronaut)", src: "/assets/projects/elevate_banner.png", caption: "Live Platform (elevatewithus.co) — Real 3D Astronaut & 360° Brand House" },
+            { label: "Live Space Orbit & Showreels", src: "/assets/projects/elevate_live_orbit.png", caption: "Live Platform — KSA Earth Orbit, Commercial Showreels & Navigation" }
         ],
         badge: "Live at elevatewithus.co",
         overview:
@@ -243,7 +243,7 @@ const SUBSYSTEMS: Record<SubsystemKey, SubsystemTab> = {
 export default function ElevateCaseStudyPage() {
     const [activeTab, setActiveTab] = useState<SubsystemKey>("website");
     const [selectedImages, setSelectedImages] = useState<Record<string, string>>({
-        website: "/assets/projects/elevateos.png"
+        website: "/assets/projects/elevate_banner.png"
     });
     const currentSubsystem = SUBSYSTEMS[activeTab];
     const currentImage = selectedImages[currentSubsystem.key] || currentSubsystem.image;

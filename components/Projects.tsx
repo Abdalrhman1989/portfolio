@@ -55,7 +55,7 @@ const projects = [
         id: 4,
         title: "Elevate OS — Enterprise Suite",
         category: "Agency",
-        image: "/assets/projects/elevateos.png",
+        image: "/assets/projects/elevate_banner.png",
         description: "A premier creative agency & enterprise OS: Public Website, Admin Command Center, Partner Portal, Client Workspace, and Headless CMS.",
         tech: ["Next.js 16", "Admin Portal", "Partner Hub", "Client Workspace", "Headless CMS"],
         links: { demo: "https://elevatewithus.co/en", github: "#" },
