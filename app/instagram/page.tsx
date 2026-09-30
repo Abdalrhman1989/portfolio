@@ -28,7 +28,13 @@ import {
     Smartphone,
     X,
     Flame,
-    ArrowUpRight
+    ArrowUpRight,
+    RefreshCw,
+    Key,
+    Sliders,
+    Terminal,
+    CheckCircle2,
+    Radio
 } from "lucide-react";
 import {
     INSTAGRAM_PROFILE,
@@ -37,6 +43,8 @@ import {
 } from "@/data/instagramVideos";
 
 export default function InstagramPage() {
+    const [videos, setVideos] = useState<InstagramVideo[]>(INSTAGRAM_VIDEOS);
+    const [profile, setProfile] = useState(INSTAGRAM_PROFILE);
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [viewMode, setViewMode] = useState<"grid" | "reels">("grid");
     const [activeVideoModal, setActiveVideoModal] = useState<InstagramVideo | null>(null);
@@ -46,21 +54,63 @@ export default function InstagramPage() {
     const [likeCounts, setLikeCounts] = useState<Record<string, number>>({});
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isSyncing, setIsSyncing] = useState(false);
+    const [syncSource, setSyncSource] = useState<"live_graph_api" | "live_rapidapi" | "cached_verified">("cached_verified");
+    const [isApiModalOpen, setIsApiModalOpen] = useState(false);
+    const [syncNotification, setSyncNotification] = useState<string | null>(null);
+
+    // Sync with backend Next.js API (/api/instagram)
+    const syncWithApi = async (force = false) => {
+        setIsSyncing(true);
+        try {
+            const res = await fetch(`/api/instagram${force ? "?refresh=true" : ""}`, { cache: "no-store" });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.videos && data.videos.length > 0) {
+                    setVideos(data.videos);
+                }
+                if (data.profile) {
+                    setProfile((prev) => ({ ...prev, ...data.profile }));
+                }
+                if (data.source) {
+                    setSyncSource(data.source);
+                }
+                setSyncNotification(
+                    data.source === "live_graph_api"
+                        ? "Synced live via Meta Instagram Graph API!"
+                        : data.source === "live_rapidapi"
+                        ? "Synced live via Instagram Scraper API!"
+                        : "Loaded verified content from @abdalrhman.darra"
+                );
+                setTimeout(() => setSyncNotification(null), 4500);
+            }
+        } catch (e) {
+            console.warn("Instagram sync error:", e);
+        } finally {
+            setIsSyncing(false);
+        }
+    };
+
+    // Auto-fetch on mount
+    useEffect(() => {
+        syncWithApi(false);
+    }, []);
 
     // Initialize like counts
     useEffect(() => {
         const counts: Record<string, number> = {};
-        INSTAGRAM_VIDEOS.forEach((v) => {
+        videos.forEach((v) => {
             const numericLikes = parseInt(v.likes.replace(/[^0-9]/g, ""), 10) || 100;
             counts[v.id] = numericLikes;
         });
         setLikeCounts(counts);
-    }, []);
+    }, [videos]);
 
     // Filter videos by category and search
-    const filteredVideos = INSTAGRAM_VIDEOS.filter((video) => {
+    const filteredVideos = videos.filter((video) => {
         const matchesCategory =
-            selectedCategory === "all" || video.category === selectedCategory;
+            selectedCategory === "all" ||
+            (selectedCategory === "reels" ? video.isRealReel : video.category === selectedCategory);
         const matchesSearch =
             searchQuery.trim() === "" ||
             video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -114,19 +164,55 @@ export default function InstagramPage() {
                         </Link>
                     </div>
 
-                    <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        {/* Live API Sync Button */}
+                        <button
+                            onClick={() => syncWithApi(true)}
+                            disabled={isSyncing}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-semibold text-foreground transition-all hover:scale-105 active:scale-95 disabled:opacity-50 cursor-pointer shadow-sm"
+                            title="Fetch latest reels & posts from Instagram API"
+                        >
+                            <RefreshCw className={`w-3.5 h-3.5 text-pink-400 ${isSyncing ? "animate-spin" : ""}`} />
+                            <span className="hidden sm:inline">{isSyncing ? "Syncing API..." : "Sync Live IG"}</span>
+                        </button>
+
+                        {/* API Setup / Docs Button */}
+                        <button
+                            onClick={() => setIsApiModalOpen(true)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-xs font-semibold text-pink-400 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                            title="Instagram API Setup Guide"
+                        >
+                            <Key className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">API Setup</span>
+                        </button>
+
                         {/* Direct Instagram Profile Link */}
                         <a
-                            href={INSTAGRAM_PROFILE.profileUrl}
+                            href={profile.profileUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white text-xs sm:text-sm font-bold shadow-lg shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 active:scale-95 transition-all"
                         >
                             <Instagram className="w-4 h-4" />
-                            <span>Follow @{INSTAGRAM_PROFILE.handle}</span>
+                            <span>Follow @{profile.handle}</span>
                         </a>
                     </div>
                 </div>
+
+                {/* Live Sync Notification Toast */}
+                <AnimatePresence>
+                    {syncNotification && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 border-b border-pink-500/30 px-4 py-2 text-center text-xs font-bold text-pink-200 flex items-center justify-center gap-2"
+                        >
+                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                            <span>{syncNotification}</span>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </header>
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-24">
@@ -139,8 +225,8 @@ export default function InstagramPage() {
                             <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-[#0a0a0d]">
                                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/15">
                                     <Image
-                                        src={INSTAGRAM_PROFILE.avatar}
-                                        alt={INSTAGRAM_PROFILE.name}
+                                        src={profile.avatar}
+                                        alt={profile.name}
                                         fill
                                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         priority
@@ -156,37 +242,63 @@ export default function InstagramPage() {
                         <div className="flex-1 text-center md:text-left">
                             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
                                 <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                                    {INSTAGRAM_PROFILE.handle}
+                                    {profile.handle}
                                 </h1>
                                 <BadgeCheck className="w-6 h-6 text-sky-400 fill-sky-400/20" />
-                                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20 uppercase tracking-wider">
-                                    Creative Director & Dev
+                                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20 uppercase tracking-wider flex items-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                    {syncSource === "live_graph_api"
+                                        ? "Meta Graph API Live"
+                                        : syncSource === "live_rapidapi"
+                                        ? "Scraper API Live"
+                                        : "Verified Instagram Feed"}
                                 </span>
                             </div>
 
                             <p className="text-sm sm:text-base font-semibold text-foreground/90 mb-3">
-                                {INSTAGRAM_PROFILE.name} • <span className="text-primary font-medium">{INSTAGRAM_PROFILE.title}</span>
+                                {profile.name} • <span className="text-primary font-medium">{profile.title}</span>
                             </p>
 
                             <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed mb-6">
-                                {INSTAGRAM_PROFILE.bio}
+                                {profile.bio}
                             </p>
 
                             {/* Quick Stats Pill */}
-                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 pt-4 border-t border-white/[0.08] text-xs sm:text-sm">
+                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 pt-4 border-t border-white/[0.08] text-xs sm:text-sm">
                                 <div>
-                                    <span className="font-extrabold text-foreground">{INSTAGRAM_VIDEOS.length}</span>{" "}
-                                    <span className="text-muted-foreground">Original Videos</span>
+                                    <span className="font-extrabold text-foreground">{profile.postsCount}</span>{" "}
+                                    <span className="text-muted-foreground">Posts</span>
                                 </div>
                                 <div className="h-3 w-[1px] bg-white/10" />
                                 <div>
-                                    <span className="font-extrabold text-foreground">4K / 1080p</span>{" "}
-                                    <span className="text-muted-foreground">Ultra HD Media</span>
+                                    <span className="font-extrabold text-pink-400">{profile.followers}</span>{" "}
+                                    <span className="text-muted-foreground">Followers</span>
                                 </div>
                                 <div className="h-3 w-[1px] bg-white/10" />
                                 <div>
-                                    <span className="font-extrabold text-emerald-400">Available</span>{" "}
-                                    <span className="text-muted-foreground">for Projects & Hire</span>
+                                    <span className="font-extrabold text-foreground">{profile.following}</span>{" "}
+                                    <span className="text-muted-foreground">Following</span>
+                                </div>
+                                <div className="h-3 w-[1px] bg-white/10" />
+                                <div className="flex items-center gap-3">
+                                    <a
+                                        href={profile.youtubeUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-red-400 transition-colors flex items-center gap-1 font-semibold text-xs"
+                                    >
+                                        <span>YouTube</span>
+                                        <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                    <a
+                                        href={profile.threadsUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 font-semibold text-xs"
+                                    >
+                                        <span>Threads</span>
+                                        <ExternalLink className="w-3 h-3" />
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +306,7 @@ export default function InstagramPage() {
                         {/* Quick CTA Actions */}
                         <div className="flex flex-row md:flex-col gap-2.5 w-full md:w-auto shrink-0 justify-center">
                             <a
-                                href={INSTAGRAM_PROFILE.profileUrl}
+                                href={profile.profileUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white text-xs font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all"
@@ -204,23 +316,26 @@ export default function InstagramPage() {
                                 <ExternalLink className="w-3.5 h-3.5 ml-1 opacity-75" />
                             </a>
 
-                            <a
-                                href={INSTAGRAM_PROFILE.whatsappUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-foreground text-xs font-bold transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            <button
+                                onClick={() => setIsApiModalOpen(true)}
+                                className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-foreground text-xs font-bold transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                             >
-                                <span>Send WhatsApp</span>
-                                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
-                            </a>
+                                <Key className="w-3.5 h-3.5 text-pink-400" />
+                                <span>Fetch API Live</span>
+                            </button>
                         </div>
                     </div>
 
                     {/* Instagram Story Highlights Bar */}
                     <div className="mt-8 pt-6 border-t border-white/[0.08]">
-                        <p className="text-[11px] uppercase tracking-wider font-bold text-muted-foreground mb-4">
-                            Featured Highlights
-                        </p>
+                        <div className="flex items-center justify-between mb-4">
+                            <p className="text-[11px] uppercase tracking-wider font-bold text-muted-foreground">
+                                Story Highlights & Categories
+                            </p>
+                            <span className="text-[11px] text-pink-400/90 font-medium">
+                                {videos.length} Works Loaded
+                            </span>
+                        </div>
                         <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto pb-2 scrollbar-none">
                             <button
                                 onClick={() => setSelectedCategory("all")}
@@ -242,7 +357,7 @@ export default function InstagramPage() {
                                 <span className="text-[11px] font-bold tracking-tight">All Works</span>
                             </button>
 
-                            {INSTAGRAM_PROFILE.highlights.map((h, i) => {
+                            {profile.highlights.map((h, i) => {
                                 const isActive = selectedCategory === h.filter;
                                 return (
                                     <button
@@ -277,11 +392,11 @@ export default function InstagramPage() {
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
                         {[
                             { id: "all", label: "All Media" },
-                            { id: "motion", label: "Motion VFX" },
-                            { id: "agency", label: "Agency & Commercial" },
-                            { id: "3d", label: "3D Art & Shaders" },
-                            { id: "art", label: "Digital Art" },
-                            { id: "showreel", label: "Tech Showreels" }
+                            { id: "reels", label: "Real Reels 🔥" },
+                            { id: "drone", label: "FPV & Drones 🚁" },
+                            { id: "travel", label: "Italy & Ibiza 🇮🇹" },
+                            { id: "motion", label: "Motion VFX ✨" },
+                            { id: "showreel", label: "Tech Showreels 💻" }
                         ].map((cat) => (
                             <button
                                 key={cat.id}
@@ -631,16 +746,34 @@ export default function InstagramPage() {
                                 <X className="w-5 h-5" />
                             </button>
 
-                            {/* Video Player Column */}
-                            <div className="lg:w-7/12 bg-black flex items-center justify-center relative min-h-[300px] sm:min-h-[420px]">
-                                <video
-                                    src={activeVideoModal.videoUrl}
-                                    poster={activeVideoModal.posterUrl}
-                                    controls
-                                    autoPlay
-                                    playsInline
-                                    className="w-full h-full max-h-[80vh] object-contain"
-                                />
+                            {/* Video / Reel Player Column */}
+                            <div className="lg:w-7/12 bg-black flex items-center justify-center relative min-h-[400px] sm:min-h-[520px]">
+                                {activeVideoModal.embedUrl ? (
+                                    <iframe
+                                        src={activeVideoModal.embedUrl}
+                                        className="w-full h-full min-h-[500px] sm:min-h-[600px] border-0 rounded-2xl bg-black"
+                                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                                        allowFullScreen
+                                    />
+                                ) : activeVideoModal.videoUrl ? (
+                                    <video
+                                        src={activeVideoModal.videoUrl}
+                                        poster={activeVideoModal.posterUrl}
+                                        controls
+                                        autoPlay
+                                        playsInline
+                                        className="w-full h-full max-h-[80vh] object-contain"
+                                    />
+                                ) : (
+                                    <div className="relative w-full h-full min-h-[400px]">
+                                        <Image
+                                            src={activeVideoModal.posterUrl}
+                                            alt={activeVideoModal.title}
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             {/* Video Information & Engagement Sidebar */}
@@ -781,6 +914,142 @@ export default function InstagramPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* INSTAGRAM API SETUP & LIVE SYNC MODAL */}
+            <AnimatePresence>
+                {isApiModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-2xl"
+                        onClick={() => setIsApiModalOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full max-w-2xl rounded-3xl bg-[#0e0e14] border border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setIsApiModalOpen(false)}
+                                className="absolute top-5 right-5 p-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-muted-foreground hover:text-white transition-all cursor-pointer"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-lg shadow-pink-500/25">
+                                    <Instagram className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-extrabold text-foreground flex items-center gap-2">
+                                        <span>Instagram API Live Fetch</span>
+                                        <BadgeCheck className="w-5 h-5 text-sky-400" />
+                                    </h3>
+                                    <p className="text-xs text-muted-foreground">
+                                        Sync all Reels, Stories, Highlights & Posts for @{profile.handle}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Active Sync Status Card */}
+                            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 mb-6">
+                                <div className="flex items-center justify-between text-xs mb-3">
+                                    <span className="text-muted-foreground font-semibold">Live Feed Status</span>
+                                    <span className="flex items-center gap-1.5 font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                        {syncSource === "live_graph_api"
+                                            ? "Meta Graph API Connected"
+                                            : syncSource === "live_rapidapi"
+                                            ? "RapidAPI Scraper Connected"
+                                            : "Active Curated Feed"}
+                                    </span>
+                                </div>
+                                <div className="grid grid-cols-3 gap-3 text-center pt-3 border-t border-white/[0.06]">
+                                    <div>
+                                        <p className="text-base font-extrabold text-foreground">{profile.followers}</p>
+                                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Followers</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-base font-extrabold text-pink-400">{profile.postsCount}</p>
+                                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Total Posts</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-base font-extrabold text-sky-400">{videos.length}</p>
+                                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Loaded Works</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Setup Instructions */}
+                            <div className="space-y-4 mb-6">
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                    How to Fetch All Your Content Dynamically
+                                </h4>
+
+                                {/* Method A: Meta Graph API */}
+                                <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-pink-500/30 transition-all">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="px-2 py-0.5 rounded-md bg-pink-500/20 text-pink-400 text-[10px] font-bold uppercase">
+                                            Official • Recommended
+                                        </span>
+                                        <span className="text-xs font-bold text-foreground">Meta Instagram Graph API</span>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+                                        Because @{profile.handle} is a Creator account, you can stream direct HD video URLs, captions, and live analytics directly from Meta.
+                                    </p>
+                                    <div className="p-2.5 rounded-xl bg-black/60 font-mono text-[11px] text-pink-300 border border-white/[0.08] flex items-center justify-between">
+                                        <code>INSTAGRAM_ACCESS_TOKEN=IGQ...</code>
+                                        <span className="text-[10px] text-muted-foreground font-sans">in .env.local</span>
+                                    </div>
+                                </div>
+
+                                {/* Method B: RapidAPI / Scraper */}
+                                <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-sky-500/30 transition-all">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-400 text-[10px] font-bold uppercase">
+                                            Zero Setup • Full Archive
+                                        </span>
+                                        <span className="text-xs font-bold text-foreground">Instagram Scraper API (RapidAPI)</span>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+                                        Fetches all 1,117 posts, all story highlights with custom icons, and active stories without requiring Facebook App reviews.
+                                    </p>
+                                    <div className="p-2.5 rounded-xl bg-black/60 font-mono text-[11px] text-sky-300 border border-white/[0.08] flex items-center justify-between">
+                                        <code>RAPIDAPI_KEY=your_key</code>
+                                        <span className="text-[10px] text-muted-foreground font-sans">in .env.local</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                <button
+                                    onClick={() => {
+                                        syncWithApi(true);
+                                    }}
+                                    disabled={isSyncing}
+                                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+                                >
+                                    <RefreshCw className={`w-4 h-4 ${isSyncing ? "animate-spin" : ""}`} />
+                                    <span>{isSyncing ? "Connecting to API..." : "Sync Live Instagram Feed"}</span>
+                                </button>
+
+                                <button
+                                    onClick={() => setIsApiModalOpen(false)}
+                                    className="px-5 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-foreground text-xs font-bold transition-all cursor-pointer"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
+
