@@ -10,7 +10,6 @@ import {
     Maximize2,
     Film,
     FileText,
-    Sparkles,
     Download,
     CheckCircle2,
     ArrowRight,
@@ -206,7 +205,7 @@ export default function VideoShowcase() {
                         transition={{ duration: 0.5 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-black uppercase tracking-widest mb-4"
                     >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Film className="w-3.5 h-3.5" />
                         <span>Interactive Video Hub</span>
                     </motion.div>
 

@@ -11,7 +11,6 @@ import {
   Lightbulb,
   PlayCircle,
   RefreshCcw,
-  Sparkles,
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -727,7 +726,7 @@ export default function MakingGamesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(20,184,166,0.18),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.14),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-300/25 bg-teal-300/10 px-3 py-1 text-sm text-teal-100">
-            <Sparkles className="h-4 w-4" />
+            <Gamepad2 className="h-4 w-4" />
             Making Games Autumn 2026
           </div>
           <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-normal text-white md:text-6xl">
@@ -1017,7 +1016,7 @@ export default function MakingGamesPage() {
       <section className="border-y border-white/10 bg-slate-950/55 px-6 py-12">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center gap-3">
-            <Sparkles className="h-6 w-6 text-teal-300" />
+            <Goal className="h-6 w-6 text-teal-300" />
             <h2 className="text-3xl font-bold text-white">Beginner Roadmap</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2">

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-    Smartphone, Globe, Database, Cpu, Sparkles, Layers, 
+    Smartphone, Globe, Database, Cpu, Layers, 
     Code2, Terminal, ExternalLink, CheckCircle2, Zap, ArrowRight,
     Server, Box, ShieldCheck, Flame, GitBranch, Binary, HardDrive
 } from "lucide-react";

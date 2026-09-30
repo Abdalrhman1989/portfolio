@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import TechEcosystem from "./TechEcosystem";
-import { Smartphone, Globe, Layers, Server, Code2, Sparkles, CheckCircle2 } from "lucide-react";
+import { Smartphone, Globe, Layers, Server, Code2, CheckCircle2 } from "lucide-react";
 
 export default function TechShowcase() {
     return (
@@ -22,7 +22,7 @@ export default function TechShowcase() {
                             transition={{ duration: 0.6 }}
                         >
                             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold mb-6 backdrop-blur-md">
-                                <Sparkles className="w-3.5 h-3.5" />
+                                <Code2 className="w-3.5 h-3.5" />
                                 <span className="uppercase tracking-widest text-[11px]">The Technical Frontier</span>
                             </div>
 

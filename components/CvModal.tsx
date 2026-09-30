@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, ExternalLink, X, FileText, Check, Sparkles, Globe2, Eye } from "lucide-react";
+import { Download, ExternalLink, X, FileText, Check, Globe2, Eye } from "lucide-react";
 import Image from "next/image";
 
 export type CvLanguage = "en" | "da" | "ar";

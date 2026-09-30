@@ -18,7 +18,6 @@ import {
     Zap,
     CheckCircle2,
     ChevronRight,
-    Sparkles,
     CreditCard,
     Film,
     Laptop,
@@ -291,7 +290,7 @@ export default function ElevateCaseStudyPage() {
                     {/* Eyebrow & Badges */}
                     <div className="flex flex-wrap items-center gap-2.5 mb-6">
                         <span className="px-3.5 py-1 rounded-full bg-[#FF8A00]/15 border border-[#FF8A00]/30 text-[#FF8A00] text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5" />
+                            <Award className="w-3.5 h-3.5" />
                             Comprehensive Case Study
                         </span>
                         <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-stone-300 text-xs font-semibold">

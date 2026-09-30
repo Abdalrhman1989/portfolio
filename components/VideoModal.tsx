@@ -13,7 +13,6 @@ import {
     Download,
     Film,
     FileText,
-    Sparkles,
     CheckCircle2,
     ExternalLink
 } from "lucide-react";

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Award, X, Lock, Unlock, Eye, Mail, Send, Check, Sparkles, Building, User, HelpCircle, ShieldCheck } from "lucide-react";
+import { Award, X, Lock, Unlock, Eye, Mail, Send, Check, Building, User, HelpCircle, ShieldCheck } from "lucide-react";
 
 export const WhatsAppIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

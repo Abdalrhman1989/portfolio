@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-    Rocket, Trophy, Volume2, VolumeX, Sparkles, Shield, 
+    Rocket, Trophy, Volume2, VolumeX, Shield, 
     Zap, Timer, RotateCcw, Play, Flame, Crosshair, Award, ArrowLeftRight
 } from "lucide-react";
 import { gameAudio } from "@/lib/gameAudio";
@@ -825,7 +825,7 @@ export default function Game2() {
                 {/* Header Title & Badges */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold mb-4 backdrop-blur-md">
-                        <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
+                        <Zap className="w-3.5 h-3.5" />
                         <span className="uppercase tracking-widest text-[11px]">Arcade Engine v2.4 • 60+ FPS Pure Canvas</span>
                     </div>
 

@@ -15,7 +15,6 @@ import {
     Palette,
     ArrowUpRight,
     Play,
-    Sparkles,
     CheckCircle2,
     Rocket,
     Send
@@ -221,7 +220,7 @@ export default function Services() {
                         transition={{ duration: 0.5 }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold mb-4 backdrop-blur-md shadow-sm">
-                            <Sparkles className="w-3.5 h-3.5" />
+                            <Layers className="w-3.5 h-3.5" />
                             <span className="uppercase tracking-widest text-[11px]">The Multidisciplinary Spectrum</span>
                         </div>
 

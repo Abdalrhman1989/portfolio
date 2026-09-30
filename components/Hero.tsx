@@ -36,7 +36,7 @@ export default function Hero() {
             {/* Subtle Cybernetic Dot Grid */}
             <div className="absolute inset-0 bg-[radial-gradient(currentColor_1px,transparent_1px)] opacity-[0.05] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_40%,#000_60%,transparent_100%)] pointer-events-none -z-10" />
 
-            {/* 3D Background Scene (Clean Ambient Stars & Sparkles - Zero Intrusive Circles) */}
+            {/* 3D Background Scene (Clean Ambient Stars & Particle Dust - Zero Intrusive Circles) */}
             <HeroScene />
 
             <div className="container relative z-10 px-4 sm:px-6 mx-auto text-center max-w-4xl">

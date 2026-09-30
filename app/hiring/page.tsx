@@ -14,7 +14,6 @@ import {
     Database, 
     ArrowRight, 
     ShieldCheck, 
-    Sparkles, 
     Layers, 
     Award,
     Clock,
@@ -412,7 +411,7 @@ export default function HiringPage() {
 
             {/* Final Contact & Booking Bar */}
             <section className="p-8 rounded-3xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 text-center flex flex-col items-center">
-                <Sparkles className="w-8 h-8 text-primary mb-3 animate-pulse" />
+                <Award className="w-8 h-8 text-primary mb-3" />
                 <h2 className="text-2xl font-extrabold text-foreground tracking-tight">
                     Ready to bring Abd Alrhman onto your team?
                 </h2>

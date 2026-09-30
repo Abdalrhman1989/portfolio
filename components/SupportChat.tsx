@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, User, Bot, Loader2, Sparkles } from "lucide-react";
+import { MessageSquare, X, Send, User, Bot, Loader2 } from "lucide-react";
 import Image from "next/image";
 
 interface Message {
@@ -219,7 +219,7 @@ export default function SupportChat() {
                                 </button>
                             </div>
                             <p className="text-[9px] text-center text-muted-foreground mt-2 uppercase tracking-widest font-medium">
-                                Powered by Gemini 2.0 Flash
+                                Abd Alrhman Portfolio • AI Assistant
                             </p>
                         </form>
                     </motion.div>

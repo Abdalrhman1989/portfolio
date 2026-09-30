@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
     Terminal,
     Code2,
-    Sparkles,
     CheckCircle2,
     Copy,
     Check,
@@ -324,7 +323,7 @@ export default function CodeSpotlight() {
                         transition={{ duration: 0.5 }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold mb-4 backdrop-blur-md shadow-sm">
-                            <Sparkles className="w-3.5 h-3.5" />
+                            <Terminal className="w-3.5 h-3.5" />
                             <span className="uppercase tracking-widest text-[11px]">Engineering Systems • What I Build</span>
                         </div>
 
