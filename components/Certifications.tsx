@@ -64,8 +64,8 @@ export default function Certifications() {
     const [reqReason, setReqReason] = useState("Recruitment / Hiring Assessment");
     const [reqSubmitted, setReqSubmitted] = useState(false);
 
-    // Use the password from the environment variable (or a default for demo)
-    const SECRET_PASSWORD = process.env.NEXT_PUBLIC_CERTS_PASSWORD || "demo123";
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         // Check if user already unlocked this session
@@ -75,17 +75,44 @@ export default function Certifications() {
         }
     }, []);
 
-    const handleUnlock = (e: React.FormEvent) => {
+    const handleUnlock = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (passwordInput === SECRET_PASSWORD) {
-            setIsUnlocked(true);
-            setError(false);
-            sessionStorage.setItem("certs_unlocked", "true");
-        } else {
+        const code = passwordInput.trim();
+        if (!code) return;
+
+        setIsVerifying(true);
+        setError(false);
+        setErrorMessage("");
+
+        try {
+            const res = await fetch("/api/verify-cert-code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                setIsUnlocked(true);
+                sessionStorage.setItem("certs_unlocked", "true");
+                setError(false);
+            } else {
+                setError(true);
+                setErrorMessage(data.error || "Invalid Access Code");
+                setPasswordInput("");
+                setTimeout(() => {
+                    setError(false);
+                    setErrorMessage("");
+                }, 3000);
+            }
+        } catch {
             setError(true);
-            setPasswordInput("");
-            // Reset error after 2 seconds
-            setTimeout(() => setError(false), 2000);
+            setErrorMessage("Connection error. Please try again.");
+            setTimeout(() => {
+                setError(false);
+                setErrorMessage("");
+            }, 3000);
+        } finally {
+            setIsVerifying(false);
         }
     };
 
@@ -194,17 +221,20 @@ export default function Certifications() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     className="text-red-500 dark:text-red-400 text-[11px] mt-2 font-semibold uppercase tracking-widest"
                                                 >
-                                                    Invalid Authentication Code
+                                                    {errorMessage || "Invalid Authentication Code"}
                                                 </motion.p>
                                             )}
                                         </div>
 
                                         <button
                                             type="submit"
-                                            className="w-full bg-primary text-primary-foreground font-black py-3.5 sm:py-4 rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all shadow-[0_10px_20px_-10px_rgba(20,184,166,0.5)] flex items-center justify-center gap-2.5 group/btn overflow-hidden relative cursor-pointer"
+                                            disabled={isVerifying}
+                                            className="w-full bg-primary text-primary-foreground font-black py-3.5 sm:py-4 rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all shadow-[0_10px_20px_-10px_rgba(20,184,166,0.5)] flex items-center justify-center gap-2.5 group/btn overflow-hidden relative cursor-pointer disabled:opacity-75 disabled:pointer-events-none"
                                         >
                                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
-                                            <span className="relative z-10 uppercase tracking-widest text-xs font-bold">Authorize & View Diplomas</span>
+                                            <span className="relative z-10 uppercase tracking-widest text-xs font-bold">
+                                                {isVerifying ? "Verifying Access Code..." : "Authorize & View Diplomas"}
+                                            </span>
                                             <Unlock className="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
                                         </button>
                                     </form>
@@ -247,32 +277,24 @@ export default function Certifications() {
                                             </button>
                                         </div>
 
-                                        {/* Phone & Instant Demo helper */}
+                                        {/* Verified Security Badge & Direct Contact */}
                                         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[11px] text-muted-foreground px-1">
                                             <span className="flex items-center gap-1.5 font-mono">
                                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                                <span>WhatsApp:</span>
+                                                <span>Direct WhatsApp:</span>
                                                 <a 
                                                     href="https://wa.me/4542223110" 
                                                     target="_blank" 
                                                     rel="noopener noreferrer" 
                                                     className="text-foreground hover:text-primary font-bold transition-colors"
                                                 >
-                                                    004542223110
+                                                    +45 42 22 31 10
                                                 </a>
                                             </span>
-
-                                            {/* Quick Recruiter Demo Code hint */}
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setPasswordInput(SECRET_PASSWORD);
-                                                }}
-                                                className="text-[10px] text-primary/80 hover:text-primary underline underline-offset-2 transition-colors cursor-pointer font-medium"
-                                                title="Quick demo access for reviewers"
-                                            >
-                                                Fill demo code ({SECRET_PASSWORD})
-                                            </button>
+                                            <span className="flex items-center gap-1 text-[10px] text-muted-foreground/80 font-mono">
+                                                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                                                <span>256-Bit Encrypted Verification</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

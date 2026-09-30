@@ -15,6 +15,7 @@ const navLinks = [
     { name: "Services", href: "/#services" },
     { name: "Projects", href: "/#projects", count: "28" },
     { name: "Case Study", href: "/case-studies/elevate", isCaseStudy: true },
+    { name: "Reels / IG", href: "/instagram", isInstagram: true },
     { name: "Hire Abd", href: "/hiring", isHiring: true },
     { name: "Experience", href: "/#experience" },
     { name: "Showcase", href: "/#showcase" },
@@ -88,6 +89,8 @@ export default function Navbar() {
                                 "relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 whitespace-nowrap flex items-center gap-1.5",
                                 link.isHiring
                                     ? "text-emerald-500 hover:text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 font-semibold shadow-sm"
+                                    : link.isInstagram
+                                    ? "text-pink-400 hover:text-pink-300 bg-pink-500/10 border border-pink-500/30 font-semibold shadow-sm"
                                     : link.isCaseStudy
                                     ? "text-primary hover:text-primary-foreground hover:bg-primary/20 bg-primary/10 border border-primary/30 font-semibold"
                                     : "text-muted-foreground hover:text-foreground hover:bg-muted/80 dark:hover:bg-white/[0.06]"
@@ -101,6 +104,9 @@ export default function Navbar() {
                             )}
                             {link.isHiring && (
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                            )}
+                            {link.isInstagram && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
                             )}
                             {link.isCaseStudy && (
                                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -205,6 +211,8 @@ export default function Navbar() {
                                         "flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
                                         link.isHiring
                                             ? "text-emerald-500 bg-emerald-500/10 border border-emerald-500/25 font-bold"
+                                            : link.isInstagram
+                                            ? "text-pink-400 bg-pink-500/10 border border-pink-500/25 font-bold"
                                             : link.isCaseStudy
                                             ? "text-primary bg-primary/10 border border-primary/20"
                                             : "text-muted-foreground hover:bg-muted hover:text-foreground"

@@ -37,6 +37,13 @@ export default function Footer() {
                             </Link>
                             <span className="text-muted-foreground/40">•</span>
                             <Link 
+                                href="/instagram" 
+                                className="text-pink-400 hover:text-pink-300 font-bold underline-offset-2 hover:underline"
+                            >
+                                📸 Instagram Video Reels
+                            </Link>
+                            <span className="text-muted-foreground/40">•</span>
+                            <Link 
                                 href="/case-studies/elevate" 
                                 className="text-primary hover:underline text-xs"
                             >
