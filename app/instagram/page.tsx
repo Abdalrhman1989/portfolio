@@ -34,7 +34,9 @@ import {
     Sliders,
     Terminal,
     CheckCircle2,
-    Radio
+    Radio,
+    Plus,
+    Link2
 } from "lucide-react";
 import {
     INSTAGRAM_PROFILE,
@@ -58,6 +60,13 @@ export default function InstagramPage() {
     const [syncSource, setSyncSource] = useState<"live_graph_api" | "live_rapidapi" | "cached_verified">("cached_verified");
     const [isApiModalOpen, setIsApiModalOpen] = useState(false);
     const [syncNotification, setSyncNotification] = useState<string | null>(null);
+
+    // Direct Reel Link Adder (Zero API keys needed!)
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [newUrl, setNewUrl] = useState("");
+    const [newTitle, setNewTitle] = useState("");
+    const [newCategory, setNewCategory] = useState<"drone" | "travel" | "motion" | "showreel">("travel");
+    const [addError, setAddError] = useState<string | null>(null);
 
     // Sync with backend Next.js API (/api/instagram)
     const syncWithApi = async (force = false) => {
@@ -91,10 +100,89 @@ export default function InstagramPage() {
         }
     };
 
-    // Auto-fetch on mount
+    // Auto-fetch on mount & load any user-added reels from localStorage
     useEffect(() => {
         syncWithApi(false);
+        try {
+            const saved = localStorage.getItem("custom_added_reels");
+            if (saved) {
+                const parsed: InstagramVideo[] = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    setVideos((prev) => {
+                        const existingIds = new Set(prev.map((v) => v.id));
+                        const unique = parsed.filter((p) => !existingIds.has(p.id));
+                        return [...unique, ...prev];
+                    });
+                }
+            }
+        } catch (err) {
+            console.warn("Failed to load custom reels:", err);
+        }
     }, []);
+
+    // Handle adding reel by simple link
+    const handleAddReel = (e: React.FormEvent) => {
+        e.preventDefault();
+        setAddError(null);
+        if (!newUrl.trim()) {
+            setAddError("Please paste an Instagram Reel or Post link.");
+            return;
+        }
+
+        // Match shortcode: /reel/SHORTCODE/ or /p/SHORTCODE/
+        const match = newUrl.match(/(?:reel|p)\/([A-Za-z0-9_-]+)/);
+        if (!match) {
+            setAddError("Please enter a valid Instagram link, for example: https://www.instagram.com/reel/DMvmMRxitN6/");
+            return;
+        }
+
+        const shortcode = match[1];
+        const categoryLabels: Record<string, string> = {
+            drone: "FPV & Drone",
+            travel: "Travel & Cinematography",
+            motion: "Motion Graphics",
+            showreel: "Showreels"
+        };
+
+        const customReel: InstagramVideo = {
+            id: shortcode,
+            shortcode,
+            title: newTitle.trim() || `Instagram Reel @${profile.handle}`,
+            category: newCategory,
+            categoryLabel: categoryLabels[newCategory] || "Instagram Reel",
+            posterUrl: `/images/instagram/real/${shortcode}.jpg`,
+            embedUrl: `https://www.instagram.com/reel/${shortcode}/embed`,
+            aspectRatio: "9:16",
+            duration: "Reel",
+            views: "Live",
+            likes: "Live",
+            comments: "Live",
+            description: `Live Instagram Reel by @${profile.handle}. Click to watch interactive video player.`,
+            tags: ["#Instagram", "#Reel", "#Creator", `#${profile.handle.replace(".", "")}`],
+            tools: ["Instagram Live", "Direct Link"],
+            featured: true,
+            instagramUrl: `https://www.instagram.com/reel/${shortcode}/`,
+            date: "Recent",
+            isRealReel: true
+        };
+
+        setVideos((prev) => [customReel, ...prev]);
+
+        // Persist to localStorage
+        try {
+            const saved = localStorage.getItem("custom_added_reels");
+            const parsed = saved ? JSON.parse(saved) : [];
+            localStorage.setItem("custom_added_reels", JSON.stringify([customReel, ...parsed]));
+        } catch (err) {
+            console.warn("Storage save error:", err);
+        }
+
+        setSyncNotification(`Successfully added reel ${shortcode} to your showcase!`);
+        setTimeout(() => setSyncNotification(null), 4500);
+        setNewUrl("");
+        setNewTitle("");
+        setIsAddModalOpen(false);
+    };
 
     // Initialize like counts
     useEffect(() => {
@@ -165,6 +253,16 @@ export default function InstagramPage() {
                     </div>
 
                     <div className="flex items-center gap-2 sm:gap-3">
+                        {/* Quick Add Reel Button (Zero Tokens / Zero Login) */}
+                        <button
+                            onClick={() => setIsAddModalOpen(true)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-xs font-semibold text-emerald-400 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                            title="Add Reel or Post directly by link (No Facebook/API login needed!)"
+                        >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Add Reel</span>
+                        </button>
+
                         {/* Live API Sync Button */}
                         <button
                             onClick={() => syncWithApi(true)}
@@ -317,11 +415,19 @@ export default function InstagramPage() {
                             </a>
 
                             <button
+                                onClick={() => setIsAddModalOpen(true)}
+                                className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-400 text-xs font-bold transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-sm"
+                            >
+                                <Plus className="w-4 h-4" />
+                                <span>Add Reel by Link</span>
+                            </button>
+
+                            <button
                                 onClick={() => setIsApiModalOpen(true)}
                                 className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-foreground text-xs font-bold transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                             >
                                 <Key className="w-3.5 h-3.5 text-pink-400" />
-                                <span>Fetch API Live</span>
+                                <span>API Status</span>
                             </button>
                         </div>
                     </div>
@@ -1045,6 +1151,128 @@ export default function InstagramPage() {
                                     Close
                                 </button>
                             </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* DIRECT ADD REEL MODAL (ZERO API KEYS / ZERO LOGIN NEEDED) */}
+            <AnimatePresence>
+                {isAddModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-2xl"
+                        onClick={() => setIsAddModalOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full max-w-lg rounded-3xl bg-[#0e0e14] border border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden"
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setIsAddModalOpen(false)}
+                                className="absolute top-5 right-5 p-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-muted-foreground hover:text-white transition-all cursor-pointer"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/25">
+                                    <Plus className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-extrabold text-foreground">
+                                        Add Reel by Link
+                                    </h3>
+                                    <p className="text-xs text-muted-foreground">
+                                        No Facebook login or RapidAPI required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p className="text-xs text-muted-foreground leading-relaxed mb-6">
+                                Paste any link directly from your Instagram account <span className="text-foreground font-semibold">(@{profile.handle})</span>. The portfolio will automatically extract the video player and embed it into your showcase.
+                            </p>
+
+                            <form onSubmit={handleAddReel} className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-foreground mb-1.5">
+                                        Instagram Reel / Post URL *
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            type="url"
+                                            value={newUrl}
+                                            onChange={(e) => setNewUrl(e.target.value)}
+                                            placeholder="https://www.instagram.com/reel/DMvmMRxitN6/"
+                                            className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 focus:border-emerald-500 text-xs text-foreground placeholder:text-muted-foreground/60 outline-none transition-all pl-10"
+                                            required
+                                        />
+                                        <Link2 className="w-4 h-4 text-muted-foreground absolute left-3.5 top-3.5" />
+                                    </div>
+                                    <p className="text-[10px] text-muted-foreground mt-1">
+                                        Open any reel in Instagram ➡️ Tap Share / Copy Link ➡️ Paste here
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-bold text-foreground mb-1.5">
+                                        Reel Title (Optional)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={newTitle}
+                                        onChange={(e) => setNewTitle(e.target.value)}
+                                        placeholder="e.g. FPV Flight Over Copenhagen"
+                                        className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 focus:border-emerald-500 text-xs text-foreground placeholder:text-muted-foreground/60 outline-none transition-all"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-bold text-foreground mb-1.5">
+                                        Category
+                                    </label>
+                                    <select
+                                        value={newCategory}
+                                        onChange={(e) => setNewCategory(e.target.value as any)}
+                                        className="w-full px-4 py-3 rounded-xl bg-[#14141c] border border-white/15 focus:border-emerald-500 text-xs text-foreground outline-none transition-all cursor-pointer"
+                                    >
+                                        <option value="travel">Italy & Travel (🇮🇹)</option>
+                                        <option value="drone">Drone & FPV (🚁)</option>
+                                        <option value="motion">Motion VFX & 3D (✨)</option>
+                                        <option value="showreel">Tech & Showreels (💻)</option>
+                                    </select>
+                                </div>
+
+                                {addError && (
+                                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
+                                        {addError}
+                                    </div>
+                                )}
+
+                                <div className="flex gap-3 pt-2">
+                                    <button
+                                        type="submit"
+                                        className="flex-1 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                                    >
+                                        <Plus className="w-4 h-4" />
+                                        <span>Add to Showcase</span>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsAddModalOpen(false)}
+                                        className="px-5 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-foreground text-xs font-bold transition-all cursor-pointer"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
                         </motion.div>
                     </motion.div>
                 )}
